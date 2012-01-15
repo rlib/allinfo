@@ -15,12 +15,12 @@ vim ~/.gitconfig
 
 [user]
          name = ton
-         email = anikin_a@mcst.ru
+         email = ton@sample.ru
 [i18n]
-    commitencoding = ru_RU.KOI8-R
+    commitencoding = ru_RU.UTF-8
 
 rm -rf ./repo
-git clone -n --template /home/terehin/work/myscr/git/templates /auto/allarch/osfs.git ./repo
+git clone -n --template /dir/git/templates /auto/allarch/osfs.git ./repo
 cd ./repo
 git fetch origin slack.stable.current:slack.stable.current
 git checkout slack.stable.current
