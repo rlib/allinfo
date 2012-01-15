@@ -46,6 +46,10 @@ git merge new
 Спасительная команда undo:
 git reset --hard HEAD
 
+git diff branch1..branch2 file.txt
+^^^
+выдаём diff для файла для изменений, которые есть в branch2, но нет в branch1
+
 
 -------------------------------------------------
 

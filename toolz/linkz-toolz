@@ -111,3 +111,6 @@ http://stackoverflow.com/questions/2101153/svn-commit-with-old-date-time
 Уживание вместе git-svn
 http://leonid.shevtsov.me/ru/perenos-svn-repozitariya-v-git
 http://linsovet.com/git-svn-sync-changes
+
+Ещё про сохранение timestamp-ов в svn
+http://stackoverflow.com/questions/2171939/how-can-i-keep-original-file-timestamp-on-subversion
