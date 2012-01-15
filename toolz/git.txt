@@ -1,15 +1,15 @@
 http://schacon.github.com/git/user-manual.html
 
-Создание тарбола
+п║п╬п╥п╢п╟п╫п╦п╣ я┌п╟я─п╠п╬п╩п╟
 
 git archive e2k.stable.rpath | gzip > ~/test/e2k.stable.rpath.tgz
 git archive slack.stable.current | gzip > ~/efs/svn/slack.stable.current.tgz
 
-Просмотр всех файлов
+п÷я─п╬я│п╪п╬я┌я─ п╡я│п╣я┘ я└п╟п╧п╩п╬п╡
 
 git log e2k.oldstable.gstuff --pretty=format: --name-only --diff-filter=A | sort - >& list.files
 
-Копирование себе репозитория
+п п╬п©п╦я─п╬п╡п╟п╫п╦п╣ я│п╣п╠п╣ я─п╣п©п╬п╥п╦я┌п╬я─п╦я▐
 
 vim ~/.gitconfig
 
@@ -25,23 +25,44 @@ cd ./repo
 git fetch origin slack.stable.current:slack.stable.current
 git checkout slack.stable.current
 
-Обновление удалённого репозитария
+п·п╠п╫п╬п╡п╩п╣п╫п╦п╣ я┐п╢п╟п╩я▒п╫п╫п╬пЁп╬ я─п╣п©п╬п╥п╦я┌п╟я─п╦я▐
 git push /auto/allarch/osfs.git slack.stable.current:slack.stable.current
 
-Обновление рабочего репо с удалённого репозитория
+п·п╠п╫п╬п╡п╩п╣п╫п╦п╣ я─п╟п╠п╬я┤п╣пЁп╬ я─п╣п©п╬ я│ я┐п╢п╟п╩я▒п╫п╫п╬пЁп╬ я─п╣п©п╬п╥п╦я┌п╬я─п╦я▐
 git pull /auto/allarch/osfs.git slack.stable.current
 
-Срезание новой ветки newbranch 
+п║я─п╣п╥п╟п╫п╦п╣ п╫п╬п╡п╬п╧ п╡п╣я┌п╨п╦ newbranch 
 
 git branch newbranch
 
-Переключение на ветвь
+п÷п╣я─п╣п╨п╩я▌я┤п╣п╫п╦п╣ п╫п╟ п╡п╣я┌п╡я▄
 git checkout slack.debug
 
-сливание ветки new в ветку main
+я│п╩п╦п╡п╟п╫п╦п╣ п╡п╣я┌п╨п╦ new п╡ п╡п╣я┌п╨я┐ main
 
 git checkout main
 git merge new
 
-Спасительная команда undo:
+п║п©п╟я│п╦я┌п╣п╩я▄п╫п╟я▐ п╨п╬п╪п╟п╫п╢п╟ undo:
 git reset --hard HEAD
+
+
+-------------------------------------------------
+
+п■п╣п╧я│я┌п╡п╦я▐ п©п╬ п╥п╟п©п╦п╩п╦п╡п╟п╫п╦я▌ я┐п╢п╟п╩я▒п╫п╫п╬пЁп╬ я─п╣п©п╬п╥п╦я┌п╬я─п╦я▐
+
+git init
+^^^
+я│п╬п╥п╢п╟я▒п╪ п╫я┐п╩п╣п╡п╬п╧ я─п╣п©п╬ 
+ssh-keygen -t rsa -C "net@rlib.su"
+^^^
+пЁп╣п╫п╣я─п╦п╪ п©п╟я─я┐ rsa-п╨п╩я▌я┤п╣п╧
+git remote add origin git@github.com:rlib/allinfo.git
+^^^
+я│п╡я▐п╥я▀п╡п╟п╣п╪я│я▐ я│ я┐п╢п╟п╩я▒п╫п╫я▀п╪ я│п╣я─п╡п╟п╨п╬п╪
+git push -u origin master
+^^^
+п╥п╟п╩п╦п╡п╟п╣п╪ п╡я│я▒ п╦п╥ п╡п╣я┌п╨п╦ master
+git push origin base.fresh:base.fresh
+^^^
+п╥п╟п╩п╦п╡п╟п╣п╪ п╡я│я▒ п╦п╥ п╡п╣я┌п╨п╦ base.fresh п╦ п╬п╢п╫п╬п╡я─п╣п╪п╣п╫п╫п╬ я│п╬п╥п╢п╟я▒п╪ я█я┌я┐ п╡п╣я┌п╨я┐, п╣я│п╩п╦ п╣я▒ п╫п╣ п╠я▀п╩п╬
