@@ -1,0 +1,41 @@
+
+Логово тестеров
+http://software-testing.ru/forum/topic/5076/
+http://www.protesting.ru/
+
+Бэкап о тестсьюте Мозиллы
+https://developer.mozilla.org/en/mozilla_automated_testing
+Про тесты Линуха + ссылка на какой-то институт программирования РАН!
+http://linuxtesting.org/
+
+По задаче покрытия
+инструмент Gcov
+http://gcc.gnu.org/onlinedocs/gcc/Gcov.html
+
+интересные вещи про dejagnu и вообще в целом (и ни о чём)
+http://caxapa.ru/65074.html
+
+по тестовым инструментам:
+DejaGNU vs QMTest
+http://gcc.gnu.org/ml/gcc/2002-05/msg01978.html
+про DejaGnu как пользоваться
+http://www.delorie.com/gnu/docs/dejagnu/dejagnu_1.html
+ещё мануал с описанием автоинструментов (autoconfigure, automake и т.д.) и хитростями
+http://www.gnu.org/software/dejagnu/manual/x199.html
+Фреймворк для тестов С-кода:
+http://check.sourceforge.net/
+Мануал к нему:
+http://check.sourceforge.net/doc/check_html/check_3.html
+
+Про expect:
+http://www.tcl.tk/man/expect5.31/expect.1.html
+http://expect.nist.gov/
+Функции expect - 
+Про catch:
+http://www.hume.com/html84/mann/catch.html
+Про uplevel
+http://tmml.sourceforge.net/doc/tcl/uplevel.html
+
+Про TCL:
+Начальный мануал по синтаксису
+http://www.cs.tut.fi/~yk/ns2ru/tcl.html

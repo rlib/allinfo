@@ -1,0 +1,119 @@
+#!/bin/sh
+# подсветка
+
+
+Сборка патча для приведения xfce-4.3.99.1 на e3m\e3s в человеческий вид
+Дата - 12.10.2010
+Тон
+
+#---------------------------------------------------------------------
+
+Собираем дистрибутив для установки:
+
+HOME=/home/anikin_a
+# впишите локальный пул для патча
+# если $DEST пуст, будет ставить сразу в систему
+DEST=
+# место, где вы собираете кросс-софт
+POOLPATH=/home/anikin_a/usr/g
+# (если надо, заменить в тексте)
+
+1. Установить hicolor-icon-theme-0.12
+
+cp -pR /home/anikin_a/usr/g/hicolor-icon-theme-0.12/build/pool.rel-15-0/64-O0/hicolor-icon-theme-0.12/* $DEST/
+
+2. Переставляем dbus
+
+cp -R /home/anikin_a/usr/g/dbus-1.0.2/build/pool.rel-15-0/64-O0/dbus-1.0.2/* $DEST/
+    # dbus вызывает глюки, но везде по-разному
+cp -R /home/anikin_a/usr/g/dbus-1.0.2/build/pool.rel-15-0/64-O0/dbus-1.0.2/etc.orig/* $DEST/etc
+cp -R /home/anikin_a/usr/g/dbus-1.0.2/build/pool.rel-15-0/64-O0/dbus-1.0.2/usr/lib/* $DEST/usr/lib
+
+3. Ставим графический блокнотик
+cp -R /home/anikin_a/usr/g/leafpad-0.8.17/build/pool.rel-15-0/64-O0/leafpad-0.8.17/* $DEST/
+
+4. Ставим новый fltk + dillo 2.2
+
+(см. $HOME/xfce4/log_building_browser.txt)
+
+cp -R /home/anikin_a/usr/g/fltk-2.0.x_r7513/build/pool.rel-15-0/64-O0/fltk-2.0.x_r7513/* $DEST/
+cp -R /home/anikin_a/usr/g/fltk-2.0.x_r7513/build/pool.rel-15-0/64-O0/fltk-2.0.x_r7513/usr/lib/* $DEST/usr/lib
+
+cp -R /home/anikin_a/usr/g/dillo-2.2/build/pool.rel-15-0/64-O0/dillo-2.2/* $DEST/
+cp -R /home/anikin_a/usr/g/dillo-2.2/build/pool.rel-15-0/64-O0/dillo-2.2/usr/lib/* $DEST/usr/lib
+cp -R /home/anikin_a/usr/g/dillo-2.2/build/pool.rel-15-0/64-O0/dillo-2.2/etc.orig/* $DEST/etc
+
+5. Устанавливаем иконки по умолчанию:
+
+    ##чтобы они собрались, вносим в ФС пакет icon-name-mapping ( см. $HOME/fs/changes_Ton.txt )
+cp -R /home/anikin_a/usr/g/gnome-icon-theme_2.22.0/build/pool.rel-15-0/64-O0/gnome-icon-theme_2.22.0/* $DEST/
+cp -pR $DEST/usr/share/icons/gnome/*  $DEST/usr/share/icons/hicolor
+
+
+6. Переустанавливаем sylpheed-2.7.0:
+cp -pR /home/anikin_a/usr/g/sylpheed-2.7.0/build/pool.rel-15-0/64-O0/sylpheed-2.7.0/* $DEST/
+cp -pR /home/anikin_a/usr/g/sylpheed-2.7.0/build/pool.rel-15-0/64-O0/sylpheed-2.7.0/usr/lib/* $DEST/usr/lib
+
+7. Ставим dekstop-file-utils, чтобы обновлять дефолтовые настройки (ради утилиты update-desktop-database)
+cp -pR /home/anikin_a/usr/g/desktop-file-utils-0.17/build/pool.rel-15-0/64-O0/desktop-file-utils-0.17/* $DEST/
+
+8. Копируем в дистрибутив настройки:
+cp -pR $HOME/xfce4/forpatch/root/root/.config $DEST/root
+cp -pR $HOME/xfce4/forpatch/root/root/.local $DEST/root
+
+
+#---------------------------------------------------------------------
+
+Действия для скрипта patch.sh, который проделывает всю работу:
+(после rlogin e3m, su)
+
+1. Ставим гадскую локаль
+
+cd /usr/share/i18n/charmaps
+gunzip KOI8-R.gz
+gunzip UTF-8.gz
+ln -s /usr/lib32/locale /usr/lib/locale
+cd /usr/lib32/locale
+localedef -c -i ru_RU -f KOI8-R ru_RU.KOI8-R
+localedef -c -i ru_RU -f UTF-8 ru_RU.UTF-8
+
+за описанием см. $HOME/docs/setting_locale_wide.txt
+
+2. Требуемые настройки в /etc/X11/xorg.conf для русской клавиатуры и шрифтов (для истории, в штатной версии уже есть)
+
+Section "Files"
+FontPath   "/usr/X11R6/lib/X11/fonts/Type1/"
+и т.п.
+
+Section "InputDevice"
+    Identifier  "Keyboard1"
+    Driver      "kbd"
+
+        Option      "XkbRules"  "xfree86"   (или xorg)
+        Option      "XkbModel" "pc105" (или pc104)
+        Option      "XkbLayout" "us,ru(winkeys)"
+        Option      "XkbOptions" "grp:ctrl_shift_toggle,grp_led:scroll"
+EndSection
+
+
+3. Ссылаемся на библиотеки для xfwm:
+ln -s /usr/xfce4/lib/gtk-2.0/2.10.0/engines/libxfce.la /usr/lib/gtk-2.0/2.10.0/engines/libxfce.la  
+ln -s /usr/xfce4/lib/gtk-2.0/2.10.0/engines/libxfce.so /usr/lib/gtk-2.0/2.10.0/engines/libxfce.so  
+
+4. Для sylpheed
+mkdir /root/Mail/queue
+mkdir /root/Mail/sent
+mkdir /root/Mail/inbox
+mkdir /root/Mail/draft
+mkdir /root/Mail/trash
+
+5. Ставим патчевый дистрибутив:
+
+gunzip patch_xfce4.tar.gz
+tar xf patch_xfce4.tar
+cp -pR ./root/* /
+# /usr/lib - это ссылка, и она не воспринимает её перезапись настоящей директорией
+cp -pR ./root/usr/lib/* /usr/lib
+# на случай, если cp игнорирует работу со скрытыми файлами
+cp -pR ./root/root/.config /root
+cp -pR ./root/root/.local /root

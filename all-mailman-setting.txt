@@ -1,0 +1,18 @@
+Документ для установки сервера почтовых рассылок на рабочей станции
+
+Тон
+12.10.2010
+
+Ставим fakeroot
+./configure --prefix=/home/anikin_a/usr/local
+make 
+make install
+
+1. Ставим web-сервер, nginx-0.8.52
+
+cd ~/usr/local/build/nginx-0.8.52
+./configure --prefix=/home/anikin_a/usr/local
+make
+make install
+
+

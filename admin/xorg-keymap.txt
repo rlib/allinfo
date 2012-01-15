@@ -1,0 +1,102 @@
+Как настроить переключение раскладок средствами Xorg?
+
+Для примера возьмем переключение по Ctrl+Shift двух языков (английский, русский) с включением индикатора Scroll Lock на русской раскладке. Открываем текстовым редактором /etc/X11/xorg.conf и ищем секцию InputDevice (Если ее нет, то нужно создать. Последние версии Xorg по умолчанию работают с практически пустым конфигом):
+
+Section "InputDevice"
+Identifier  "Keyboard0"
+Driver      "kbd"
+Option      "XkbModel" "pc105"
+Option      "XkbLayout" "us,ru"
+Option      "XkbOptions" "grp:ctrl_shift_toggle,grp_led:scroll"
+EndSection
+
+Пример с переключением трех языков (английский, русский, украинский):
+
+Section "InputDevice"
+Identifier  "Keyboard0"
+Driver      "kbd"
+Option      "XkbModel" "pc105"
+Option      "XkbLayout" "us,ru,ua"
+Option      "XkbOptions" "grp:ctrl_shift_toggle,grp_led:scroll"
+EndSection
+
+Для старых версий Xorg (где xkeyboard-config < 1.2) XkbLayout нужно указывать в виде "us,ru(winkeys)".
+
+Теперь непосредственно рассмотрим переключатель. Во всех примерах по умолчанию стоит английский. Переключатель описывается в последней строке. Для того, чтобы переключаться по Ctrl+Shift указывается параметр ctrl_shift_toggle, по Alt+Shift - alt_shift_toggle. Значение grp_led:scroll говорит о том, что после переключения будет загораться индикатор Scroll Lock.
+
+Остальные варианты значений XkbOptions можно посмотреть тут.
+А как настроить переключение раскладок если нет доступа к конфигу или нужно сменить настройки переключения на лету?
+
+user@linux$ setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll'
+
+Редактирование xorg.conf не помогло. Что делать?
+
+Начиная с Xorg 7.4 по умолчанию конфигурация устройств ввода осуществляется не через файл xorg.conf, а через HAL. Это позволяет подключать различные клавиатуры и мышки "на лету" и они будут работать без необходимости перезапуска иксов. Но при этом, например для настройки раскладки, возникает необходимость правки xml конфигов HAL вместо простого и удобного файла xorg.conf.
+
+Есть три пути решения проблемы:
+
+1. Настройка через файл политики HAL.
+
+Копируем fdi-файл, содержащий конфигурацию клавиатуры:
+
+cp /usr/share/hal/fdi/policy/10osvendor/10-keymap.fdi /etc/hal/fdi/policy
+
+Дальнейшие настройки необходимо вносить именно в скопированный файл.
+
+В зависимости от того, какой драйвер обслуживает вашу клавиатуру, используются разные конфигурационные данные.
+
+Для того, чтобы определить какой драйвер используется в вашей системе, необходимо выполнить следующую команду:
+
+hal-device | grep -iA 10 input.keyboard
+
+И поискать в её выводе упоминание о драйвере.
+
+Если используется драйвер kbd:
+
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<deviceinfo version="0.2">
+    <match key="info.capabilities" contains="input.keyboard">
+      <merge key="input.xkb.rules" type="string">base</merge>
+      <merge key="input.xkb.layout" type="string">us,ru</merge>
+      <merge key="input.xkb.options" type="string">grp:ctrl_shift_toggle,grp_led:scroll</merge>
+      <merge key="input.xkb.variant" type="string">,winkeys</merge> 
+    </match>
+  </device>
+</deviceinfo>
+
+Если используется драйвер evdev:
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<deviceinfo version="0.2">
+  <device>
+    <match key="info.capabilities" contains="input.keyboard">
+      <merge key="input.x11_driver" type="string">evdev</merge>
+      <merge key="input.x11_options.XkbRules" type="string">evdev</merge>
+      <merge key="input.x11_options.XkbLayout" type="string">us,ru</merge>
+      <merge key="input.x11_options.XkbOptions" type="strlist">grp:ctrl_shift_toggle,grp_led:scroll</merge>
+      <merge key="input.x11_options.XkbVariant" type="strlist">,winkeys</merge>
+    </match>
+  </device>
+</deviceinfo>
+
+После внесения изменений необходимо перезапустить HAL
+
+/etc/init.d/hal restart (для debian-based дистрибутивов)
+
+В некоторых случаях придётся перезапустить Xorg.
+
+2. Если первый способ чем то не устраивает, то можно просто добавить следующие строчки в xorg.conf:
+
+Section "ServerFlags"
+Option "AutoAddDevices" "False"
+EndSection
+
+и настраивать переключение привычным способом.
+
+3. В debian-based дистрибутивах можно отредактировать файл /etc/default/console-setup записав в переменные XKBMODEL, XKBLAYOUT, XKBVARIANT и XKBOPTIONS подходящие значения:
+
+XKBMODEL="pc105"
+XKBLAYOUT="us,ru"
+XKBVARIANT=","
+XKBOPTIONS="grp:ctrl_shift_toggle,grp_led:scroll"
+

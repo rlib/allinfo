@@ -1,0 +1,91 @@
+framework для правки бинарников - офигенный, с руководством
+http://radare.nopcode.org/new/?doc
+http://radare.nopcode.org/doc/html/contents.html
+
+Кое что про зловредный tls в библиотеках
+http://www.akkadia.org/drepper/assumekernel.html
+
+Грустняво-познавательное о формате ELF + кодирование путей библиотек во время линковки \ исполнения
+http://www.eyrie.org/~eagle/notes/rpath.html
+http://mikehearn.wordpress.com/2006/08/25/elf-and-program-loading/
+
+Руководство по GDB, внезапно много интересного про С++
+http://mitya.pp.ru/gdb/gdb_10.html
+http://mitya.pp.ru/gdb/gdb_11.html#SEC95
+
+Атака про защищённый режим
+http://sasm.narod.ru/docs/pm/pm_in/main.htm
+http://www.wasm.ru/publist.php?list=24
+Вообще весь сайт wasm.ru
+
+Подробно про устройство elf - но статья старая
+http://www.linuxjournal.com/article/1060
+Туда же
+http://www.sco.com/developers/gabi/2000-07-17/ch5.dynamic.html
+
+Бинарник из скрипта!!
+http://www.yurijgoncharuk.org.ua/2010/05/sh-shc.html
+
+Забавная статья про icc
+http://habrahabr.ru/blogs/hardware/80050/
+
+Вот тебе ман по gdb
+http://www.insidepro.com/kk/039/039r.shtml
+
+Ещё про ELF библиотеки (перехват вызовов)
+http://habrahabr.ru/blogs/development/106107/
+
+Создание\использование динамических библиотек
+http://mech.math.msu.su/~zubr/library.html
+
+Кратенько про гнутый асм:
+http://www.opennet.ru/base/dev/from_c_to_asm.txt.html
+
+Более полно про гнутый асм:
+http://asm.sourceforge.net//articles/linasm.html#InlineASM.
+
+Системные вызовы Линя:
+http://www.opennet.ru/man.shtml?topic=intro&category=2#lbAD
+http://welinux.ru/post/3905/
+http://www.linuxcenter.ru/lib/articles/programming/intercept_lnx.phtml
+
+Книга "Техника отладки" + ресурс сам по себе
+http://rus-linux.net/MyLDP/BOOKS/ldd2/ldd2_ch4/ldd2_ch4.html
+
+Про устройство программы в линях
+http://www.lisha.ufsc.br/teaching/os/exercise/hello.html
+
+Ещё про устройство программы в линях
+http://www.tldp.org/HOWTO/Program-Library-HOWTO/
+
+Хороший ответник по вопросам C/C++
+http://bytes.com/topic/c/answers/
+
+Крис Касперски про отладчики\дизассемблеры и т.п.
+http://www.insidepro.com/kk/040/040r.shtml
+
+Дизассемблеръ
+http://wasm.ru/toollist.php?list=13
+http://www.hex-rays.com/idapro/linux/index.htm
+
+курительный материал про shared библиотеки:
+http://www.opennet.ru/base/dev/shared_lib_intro.txt.html
+http://mech.math.msu.su/~zubr/library.html
+
+Бинарные файлы Unix:
+http://www.freebsd.org/doc/ru/books/handbook/binary-formats.html
+
+Переполнение буфера для чайников
+http://www.securitylab.ru/contest/212095.php
+
+По gdb вообще
+http://www.delorie.com/gnu/docs/gdb/gdb_56.html
+
+Начальный уровень про статические и динамические библиотеки
+http://linuxopen.ru/2008/08/01/staticheskie-i-dinamicheskie-biblioteki.html
+
+Библиотека эксплойтов
+http://ftp.gwdg.de/pub/misc/www.rootshell.com/
+
+Настройка сброса корок
+http://www.cyberciti.biz/tips/linux-core-dumps.html

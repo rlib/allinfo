@@ -1,0 +1,23 @@
+#!/bin/sh
+# подсветка
+
+#Установка sudo:
+
+INSTP=/home/anikin_a/usr/g/sudo-1.7.4p4/build
+
+chmod -R go+rx $INSTP/pool.rel-15-0/64-O0/sudo-1.7.4p4/var
+#su e3m
+cp -R $INSTP/pool.rel-15-0/64-O0/sudo-1.7.4p4/* /
+mv /etc.orig/{sudoers,sudoers.d} /etc
+chown root:root /etc/sudoers
+chmod 0440 /etc/sudoers
+chown root:root /etc/sudoers.d
+chmod 600 /etc/sudoers.d
+chown root:root /usr/bin/sudo
+chmod 4755 /usr/bin/sudo
+chown -R root:root /var/db/sudo
+visudo
+# настраиваем правила доступа - например, можно раскомментить строку 
+%wheel ALL=(ALL) ALL
+добавляем пользователя в группу wheel
+перегружаемся

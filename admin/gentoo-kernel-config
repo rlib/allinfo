@@ -1,0 +1,57 @@
+1. Для видео надо убирать поддержку nvidia в ядре:
+Device Drivers --->
+Graphics Support --->
+<*> Support for frame buffer devices --->
+< >   nVidia Framebuffer Support
+< >   nVidia Riva support
+
+возможная поддержка framebuffer:
+
+Device Drivers --->
+Graphics Support --->
+<*> Support for frame buffer devices --->
+<*>   Userspace VESA VGA graphics support
+
+либо
+
+Device Drivers --->
+Graphics Support --->
+<*> Support for frame buffer devices --->
+[*]   VESA VGA graphics support
+
+Также помимо прочего
+Loadable module support --->
+  [*] Enable loadable module support
+
+2. всякое для USB:
+
+Device Drivers  --->
+  SCSI device support  --->
+
+(Although SCSI will be enabled automatically when selecting USB Mass Storage,
+we need to enable disk support.)
+---   SCSI support type (disk, tape, CD-ROM)
+<*>   SCSI disk support
+
+(Then move back a level and go into USB support)
+USB support  --->
+
+(This is the root hub and is required for USB support.
+If you'd like to compile this as a module, it will be called usbcore.)
+<*> Support for Host-side USB
+
+(Select at least one of the HCDs. If you are unsure, picking all is fine.)
+--- USB Host Controller Drivers
+<*> EHCI HCD (USB 2.0) support
+< > OHCI HCD support
+<*> UHCI HCD (most Intel and VIA) support
+
+(Moving a little further down, we come to CDC and mass storage.)
+< > USB Modem (CDC ACM) support
+<*> USB Printer support
+<*> USB Mass Storage support
+
+Device Drivers --->
+  [*] HID Devices  --->
+    <*>   USB Human Interface Device (full HID) support
+

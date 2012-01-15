@@ -1,0 +1,31 @@
+установка Dejagnu 1.4.4
+
+Требует наличия программ TCL и expect.
+Для установки expect:
+http://expect.nist.gov/
+
+with_tcl=/home/anikin_a/usr/tcl8.4.13/lib; export with_tcl;
+(там лежит tclConfig.sh)
+with_tclinclude=/home/anikin_a/usr/tcl8.4.13/generic; export with_tclinclude;
+./configure --prefix=/home/anikin_a/usr/expect-5.43
+make
+make install
+для прогона проверки, всё ли как надо, запустить make test
+с такими параметрами всё работало
+
+указываем ДежаГне, где лежит expect
+EXPECT=/home/anikin_a/usr/expect-5.43/bin/expect; export EXPECT;
+with_tclinclude=/home/anikin_a/usr/tcl8.4.13/unix; export with_tclinclude;
+./configure --build=i686 --prefix=/home/anikin_a/usr/dejagnu-1.4.4 --srcdir=/home/anikin_a/usr/dejagnu-1.4.4 --with-tcl=/home/anikin_a/usr/tcl8.4.13/unix TCLSH=/home/anikin_a/usr/tcl8.4.13/unix/tclsh EXPECT=/home/anikin_a/usr/expect-5.43/expect 
+make install
+
+Запуск проверочных\example тестов:
+EXPECT=/home/anikin_a/usr/expect-5.43/bin/expect; export EXPECT;
+/home/anikin_a/usr/dejagnu-1.4.4/runtest EXPECT=/home/anikin_a/usr/expect-5.43/expect RUNTEST=/home/anikin_a/usr/dejagnu-1.4.4/runtest --verbose
+
+На x86 всё отлично
+
+Чтобы проверить какой-то готовый тестовый пакет, надо запустить:
+./runtest EXPECT=/home/anikin_a/usr/expect-5.43/expect --tool [progname] --srcdir [/path/to/testsuite] --verb
+
+

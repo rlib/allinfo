@@ -1,0 +1,237 @@
+
+Пра дрова
+http://www.freesoftwaremagazine.com/articles/drivers_linux?page=0,0
+
+мега-свалка ссылок про ниндзя в текстовом режиме
+http://www.linuxcenter.ru/enc/textmode.phtml
+
+Типа мега-книжка, прочекать по тюнингу-разнюхингу системы
+The GNU/Linux Advanced Administration
+
+Про мультизагрузку осей своими руками
+http://www.linuxshare.ru/docs/software/grubbest.html
+
+Theory and practice sometimes clash. And when that happens, theory loses. Every single time. 
+Torvalds, Linus (2009-03-25). Message to Linux kernel mailing list. Retrieved on 2009-03-25
+http://lkml.org/lkml/2009/3/25/632
+
+Как поднять консольную почтовую систему
+http://gentoo.theserverside.ru/book/ar63.html
+
+Вкусное про файловые системы - Индекс
+http://citforum.ru/operating_systems/linux/robbins/index.shtml
+
+Вкусное про файловые системы - Первая статья
+http://citforum.ru/operating_systems/linux/robbins/fs01.shtml
+
+руководство по сборке OpenOffice
+http://wiki.services.openoffice.org/wiki/Documentation/Building_Guide
+
+Про Никсы в целом - история, лицензии, дистрибы, и т.д., Федорчук
+http://www.linuxcenter.ru/lib/books/posixbook/ch01.phtml
+
+Архив Linux Format
+http://www.lab.sun.mcst.ru/progs/Technical_library/LinuxFormatPdf/index_wiki.html
+
+Куча туториалов про экзы LPI
+http://www.ibm.com/developerworks/views/linux/libraryview.jsp?type_by=Tutorials
+
+сайт про операционки - праздно почитать с любопытством
+http://www.osdata.com/index.htm
+
+Для сисадминов много чего
+http://system-administrators.info/?cat=47
+
+Команды Линя в таблице:
+http://www.pixelbeat.org/cmdline_ru_RU.html
+
+Клёвый форум по Линям
+http://forum.lafox.net/index.php?showtopic=20389
+
+Сайт с подробными хорошими мануалами
+http://www.manpagez.com
+
+вопросы по Линям
+linsovet.com
+
+ещё хороший инфопортал по Линям
+linuxinfor.com
+
+Лицензии:
+http://www.opensource.org/licenses/cddl1.php
+http://developers.sun.ru/content/view/283/31/
+
+Общеобразовательное:
+http://www.linuxquestions.org/
+(можно попытаться ответить:)
+http://www.linuxquestions.org/questions/linux-software-2/expect-scripting-syntax-problems...catch-echo....-99136/
+
+По горячим клавишам Linux
+http://knoppix.ru/art-2-9.shtml
+
+Азы про юзеров в Lin
+http://heap.altlinux.org/issues/modules/users_in_linux.kirill/index.html
+
+Разного рода приёмы \ мини-скрипты для повседневного десктоп-никса
+http://www.michurin.com.ru/unix-util.shtml
+
+Аналоги программ вынь-линь
+http://ru.gentoo-wiki.com/wiki/Windows-%D1%8D%D0%BA%D0%B2%D0%B8%D0%B2%D0%B0%D0%BB%D0%B5%D0%BD%D1%82%D1%8B#Office
+
+Снятие скриншотов
+http://tips.webdesign10.com/how-to-take-a-screenshot-on-ubuntu-linux
+
+Библиотека по Линю от IBM
+http://www.ibm.com/developerworks/ru/views/linux/libraryview.jsp
+
+Как поставить drweb в gentoo
+http://silinio.webhost.ru/drwebes-gentoo.html
+
+Создание своего загрузочного LiveCD-Gentoo
+http://www.unixdoc.ru/index.php?mode=2&podmode=1&arcicle_id=89
+
+Обзор состава FreeBSD
+http://www.ixbt.com/soft/freebsd02.shtml
+
+Антивири под линукс (куцо)
+http://www.hardnsoft.ru/?trID=186&artID=9700
+
+Описание скрещивания web-камеры и линя
+http://www.gentoo.ru/node/4999
+
+Исследование скорости харда и создание ФС с 4kb-сектором
+http://rlab.ru/doc/4k_hdd_for_linux.html
+
+Свалка статей про консольную работу
+http://rus-linux.net/lib.php?name=/MyLDP/consol/index
+
+Обзор графических эмуляторов консоли
+http://rus-linux.net/nlib.php?name=/MyLDP/consol/terminals/linux-terminal-emulators.html
+
+Русификация Слаки
+http://www.linux.org.ru/wiki/en/%D0%A0%D1%83%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F_Slackware_12_c_utf8
+
+Наброс из мультимедиа-прог для линя
+http://www.gentoo.ru/node/15541
+
+Порт zfs на линь на уровне модуля ядра
+http://zfsonlinux.org
+
+Порт zfs на линь на уровне fuse \ юзера
+http://zfs-fuse.net/
+
+Создание установочной Слаки на флешке
+http://connie.slackware.com/~alien/tools/usbinstall/13.0/
+
+Установка Слаки - официальное руководство
+http://www.slackware.com/install
+
+Кодирование DVD + запись на диск
+http://ru.gentoo-wiki.com/wiki/HOWTO_%D0%97%D0%B0%D0%BF%D0%B8%D1%81%D1%8C_%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_DVD_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0
+
+Информация про запись DVD через growisofs
+http://www.cyberciti.biz/tips/howto-linux-write-burn-data-to-dvd-or-dvdrw.html
+
+Слакбук новая версия, йахууу
+http://www.slackbook.org/beta
+
+-------------------- Графика ----------------------
+
+Ускорение kde
+http://citkit.ru/articles/382/
+
+Про свежую xfce4
+http://habrahabr.ru/blogs/open_source/111987/#habracut
+
+FAQ по всему десктопному
+http://www.opennet.ru/docs/RUS/lor_faq/lorFAQ-14.html
+
+Удалённый запуск иксов
+http://cf.viplast.ru/operating_systems/linux/HOWTO/mini/Remote-X-Apps/index.shtml
+
+конкретно про запуск Иксов через печеньку
+http://cf.viplast.ru/operating_systems/linux/HOWTO/mini/Remote-X-Apps/x150.shtml
+
+С лора про иксы
+http://www.linux.org.ru/wiki/en/X-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80#%D0%9A%D0%B0%D0%BA_%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C_%D0%B8%D0%BB%D0%B8_%D0%BF%D0%B5%D1%80%D0%B5%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D1%82%D0%B8%D1%82%D1%8C_%D0%A5-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%3F
+
+Запуск Иксов от Костромина
+http://www.linuxcenter.ru/lib/books/kostromin/gl_07_04.phtml
+
+О настройке Иксов под разрешение-частоту
+http://www.helplinux.ru/wiki/kb:xorg-freq
+
+Настройка Иксов от фрибсдшников
+http://www.freebsd.org/doc/ru/books/handbook/x-config.html
+
+-------------------- Шрифты ----------------------
+
+О шрифтах в лине
+http://ru.wikibooks.org/wiki/%D0%A8%D1%80%D0%B8%D1%84%D1%82%D1%8B_%D0%B2_Linux
+
+Прикольно про настройки шрифтов через fontconfig и вообще в целом
+http://neugierig.org/software/chromium/fonts/
+
+Настройка крутых самопильных шрифтов!
+http://www.ljpoisk.ru/archive/860016.html
+
+Ещё пример работы с fontconfig
+http://useunix.ru/nastraivaem-shrifty-v-xorg-freebsd-i-linux
+
+-------------------- Gentoo ----------------------
+
+Руководство по usb вообще и в gentoo в частности - Gentoo Linux USB Guide
+http://www.gentoo.org/doc/en/usb-guide.xml
+
+Про Gentoolkit - тулзы для portage
+http://www.gentoo.org/doc/ru/gentoolkit.xml
+
+Про апгрейд компилятора gcc в Gentoo
+http://www.gentoo.org/doc/en/gcc-upgrading.xml
+
+Про апгрейд самого Gentoo
+http://www.gentoo.org/doc/en/gentoo-upgrading.xml
+
+Как размаскировать пакет в portage
+http://articles.slicehost.com/2009/7/14/gentoo-portage-trouble-shooting
+
+Модификация package.keywords в Portage
+http://www.gentoo-wiki.info/ERROR_Invalid_atom_in_/etc/portage/package.keywords
+
+Написание своего ebuild для установки бинарного пакета в Gentoo (на примере rpm)
+http://www.ylsoftware.com/news/402
+
+Оригинальная документация Gentoo, тысячи её
+http://www.gentoo.org/doc/en/list.xml?desc=1
+
+Тонкости nvidia + Gentoo
+http://www.gentoo.org/doc/en/nvidia-guide.xml
+
+Джентушный народный FAQ
+http://www.opennet.ru/docs/RUS/lor_faq/lorFAQ-4.html
+
+Про оптимизацию при компиляции
+http://www.gentoo.org/doc/en/gcc-optimization.xml
+
+Фокусы с Prelink
+http://www.gentoo.org/doc/en/prelink-howto.xml
+
+Выжимка инфы для установки-настройки Gentoo + мультисистемных вещей
+http://gentoo.theserverside.ru/gentoo-doc/Gentoo_doc-1.5-17.html
+
+------------------- Соляра ----------------------------------
+
+Сборник индексов на документацию
+http://www.unixpin.com/wordpress/2008/10/02/solaris10-russian-docs/
+
+Сайт про десятую соляру, документация про внутреннее устройство
+http://www.solaris10.ru/
+
+Ещё сайт про Соляру + общениксовые штуки
+http://solarisblog.ru/
+
+Официальный сборник сановских доков
+http://www.oracle.com/technetwork/indexes/documentation/index.html
+
+
+

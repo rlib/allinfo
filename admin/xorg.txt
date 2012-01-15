@@ -1,0 +1,10 @@
+#*. Запуск второго сеанса иксов, который бы принимал удалённые соединения
+
+запустить Иксы с отредактированным xorg.conf
+Там убраны лишние модули + строка в Devices:
+    Option      "mtrr" "off"
+
+xinit /etc/X11/xinit/xinitrc -- :0 /etc/X11/xinit/xserverrc -auth $HOME/.Xauthority
+
+По факту запускаю через 
+startx -- :1

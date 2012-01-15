@@ -1,0 +1,47 @@
+http://schacon.github.com/git/user-manual.html
+
+Создание тарбола
+
+git archive e2k.stable.rpath | gzip > ~/test/e2k.stable.rpath.tgz
+git archive slack.stable.current | gzip > ~/efs/svn/slack.stable.current.tgz
+
+Просмотр всех файлов
+
+git log e2k.oldstable.gstuff --pretty=format: --name-only --diff-filter=A | sort - >& list.files
+
+Копирование себе репозитория
+
+vim ~/.gitconfig
+
+[user]
+         name = ton
+         email = anikin_a@mcst.ru
+[i18n]
+    commitencoding = ru_RU.KOI8-R
+
+rm -rf ./repo
+git clone -n --template /home/terehin/work/myscr/git/templates /auto/allarch/osfs.git ./repo
+cd ./repo
+git fetch origin slack.stable.current:slack.stable.current
+git checkout slack.stable.current
+
+Обновление удалённого репозитария
+git push /auto/allarch/osfs.git slack.stable.current:slack.stable.current
+
+Обновление рабочего репо с удалённого репозитория
+git pull /auto/allarch/osfs.git slack.stable.current
+
+Срезание новой ветки newbranch 
+
+git branch newbranch
+
+Переключение на ветвь
+git checkout slack.debug
+
+сливание ветки new в ветку main
+
+git checkout main
+git merge new
+
+Спасительная команда undo:
+git reset --hard HEAD

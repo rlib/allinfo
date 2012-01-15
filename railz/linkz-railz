@@ -1,0 +1,16 @@
+
+Программирование с потоками
+http://randu.org/tutorials/threads/
+http://www.ibm.com/developerworks/linux/library/l-posix1.html
+(на ибм-е же мощная библиотека материалов по никсам, чего только нет)
+http://www.thinkingparallel.com/2007/04/11/ten-questions-with-david-butenhof-about-parallel-programming-and-posix-threads/
+
+Язык Эрланг - спроектированный для параллельных вычислений
+http://ru.wikipedia.org/wiki/Erlang
+
+Основы многопоточного гробокопания
+http://progclub.ru/?p=2820
+http://progclub.ru/?p=2821#more-2821
+
++ там же по тэгу "многоядерное программирование"
+

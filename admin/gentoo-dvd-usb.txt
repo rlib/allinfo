@@ -1,0 +1,37 @@
+#По установке линя без потерь старых данных через флешки
+
+Создание LiveDVD Gentoo:
+
+umount /dev/sdg1
+mkdosfs -F 32 /dev/sdg1
+mkdir -p /mnt/dvd
+mount -o loop,ro -t iso9660 /home/ton/bg/os/gentoo-livedvd-x86-amd64-32ul-11.2.iso /mnt/dvd
+mkdir -p /mnt/usb
+# следить за буквами девайсов!!!
+mount -t vfat /dev/sdg1 /mnt/usb
+
+cp -R /mnt/dvd/* /mnt/usb
+mv /mnt/usb/isolinux/* /mnt/usb
+mv /mnt/usb/isolinux.cfg /mnt/usb/syslinux.cfg
+rm -rf /mnt/usb/isolinux*
+
+# (The memtest86 kernel needs to be renamed for loading it via syslinux)
+#mv /mnt/usb/memtest86 /mnt/usb/memtest
+# это для актуального DVD:
+cp /mnt/usb/boot/memtest86 /mnt/usb/boot/memtest
+umount /mnt/dvd
+
+sed -i \
+    -e "s:cdroot:cdroot slowusb:" \
+    -e "s:kernel memtest86:kernel memtest:" \
+    /mnt/usb/syslinux.cfg
+
+umount /mnt/usb
+# тут должно быть всё закомментировано, строку SAMPLE FILE он пошлёт нафиг
+vim /etc/mtools/mtools.conf 
+syslinux /dev/sdg1
+
+#всё готово, можно бутиться с флешки
+# чтобы после загрузки зайти под рутом:
+sudo su -
+

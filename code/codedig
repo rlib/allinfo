@@ -1,0 +1,54 @@
+Общая информация про всё весёлое
+
+----------------------------------------
+Снимаем трассу:
+пример запуска:
+bash --norc -ic 'ulimit -v 7500000 ; ./le3m'
+strace -f bash --norc -ic 'ulimit -v 7500000 ; ./le3m'
+
+Для текущего процесса:
+strace -f -p `pidof ftpd` -o strace_ftpd_binary.log
+
+Посмотреть, какие файлы открывает процесс!
+strace -e trace=open
+
+Поставить нормальную длину строк, чтобы strace их не обгрызал
+strace -s 500
+
+
+Читаем библиотеки:
+
+readelf --symbols
+
+Читаем объектники:
+
+objdump -hrt hello.o
+
+Дизассемблер объектников е3м:
+
+ldis_i -Fd hello.o
+
+работа со всяким
+http://bugzilla.lab.sun.mcst.ru/bugzilla-mcst/show_bug.cgi?id=41022
+
+Символьная таблица:
+objdump -T
+objdump -R
+-j sectionname - только для секции
+
+-------------------------------------------------------
+
+Вот так называется функция линкера, которая заполняет .plt
+
+0x00000aaaaaab8e68 in fillin_rpath () from /lib64/ld-linux.so.2
+
+Новый стрейс
+/home/breger/strace/usr/bin/strace
+Опция для подробностей: -vvv
+
+-------------------------------------------------------
+
+Палево всех макросов, которые взводит компилятор!!
+
+/home/cf/ecomp.rel-i-1/lcc_i -dM -E -xc /dev/null
+/home/cf/ecomp.rel-i-1/lcc_i -dM -E -xc++ /dev/null

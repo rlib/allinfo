@@ -1,0 +1,33 @@
+#*. просмотр настроек оптимизаций компилятора
+
+gcc -fverbose-asm -march=native -Q --help=target
+
+#*. компиляция ядра через genkernel
+
+# копируем конфиг от генкернела по умолчанию, который стопудняк работает
+zcat /proc/config.gz > /usr/src/linux/.config
+# либо сохраняем текущее уже рабочее
+cp .config .working_config
+
+# заходим в меню и надругиваемся
+make menuconfig
+
+#вот отсюда конфигурация для компиляции берётся по-нормальному:
+cp .config /usr/share/genkernel/arch/x86/kernel-config
+
+#а вот отсюда - гадским genkernel, который юзает кэш после первой удачной компиляции
+cp .config /etc/kernels/kernel-config-x86-2.6.31-gentoo-r10
+
+#аминь
+genkernel all
+# крайний раз компиляция ~ 11 минут
+
+#потом надо переставлять дрова, которые от ядра зависят
+#ставим один раз для сего приблуду
+emerge module-rebuild
+module-rebuild populate
+
+#и теперь после перекомпиляции ребилдим
+module-rebuild rebuild
+
+

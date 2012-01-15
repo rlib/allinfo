@@ -1,0 +1,42 @@
+#!/bin/sh
+
+Всё про локализацию системы и шрифты
+
+Смотрим, какие доступные локали есть в системе
+locale -a
+
+Нифига нет, надо определить новую
+Локали ставятся двумя способами:
+1. - записать в директорию /usr/lib32/locale локаль в текстовом виде
+(много файлов вида LC_*)
+
+2. сгенерировать в бинарном виде через localedef
+Делаем 2:
+
+Подготовим нужные заготовки
+cd /usr/share/i18n/charmaps
+gunzip KOI8-R.gz
+gunzip UTF-8.gz
+
+на эльбрусе локали лежат во внесистемном пути, и чтобы системные утилиты находили:
+ln -s /usr/lib32/locale /usr/lib/locale
+
+cd /usr/lib32/locale
+localedef -c -i ru_RU -f KOI8-R ru_RU.KOI8-R
+localedef -c -i ru_RU -f UTF-8 ru_RU.UTF-8
+-i - файл-сырец-источник, -f - charmap, ru_RU.KOI8-R - системное название локали
+сырцы лежат в /usr/share/i18n/locales
+charmap-раскладки лежат в /usr/share/i18n/charmaps
+
+команда создаст бинарник, в котором хранится вся информация об установленных локалях:
+/usr/lib32/locale/locale-archive
+
+
+cp -pR /home/anikin_a/usr/g/console-cyrillic-0.9/build/src/console-cyrillic-0.9 /usr/share
+consolechars -f /usr/share/console-cyrillic/psf/UniCyr_8x14.psf -m /usr/share/console-cyrillic/acm/koi8-r.acm
+
+
+
+
+``````````````````````````````````````````````````````
+http://my-ubuntu-land.blogspot.com/2010/02/ubuntu-804.html

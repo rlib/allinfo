@@ -1,0 +1,30 @@
+всякое про emerge
+
+#установить только новое
+emerge -n xxx
+
+#снести быстро
+emegre --unmerge xxx
+
+#снести нах с зависимостями
+emerge --depclean xxx
+
+# пересобрать устаревшие зависимости
+revdep-rebuild
+* checking reverse dependencies
+ * packages containing binaries and libraries broken by a package update
+ * will be emerged
+
+# просмотр возможных профилей
+eselect profile list
++ eselect --help
+
+# программы для работы с установкой
+gentoolkit 	- поиск зависимостей
+eix 		- поиск по описаниям
+
+# поиск пути к сборочным файлам
+equery which cdrtools
+
+# обновить ebuildы в emerge 
+emerge --sync

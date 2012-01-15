@@ -1,0 +1,113 @@
+Всякое про cmake - обзор и статьи
+http://wiki.linuxformat.ru/index.php/LXF99:CMake
+
+Либтул, кросс-либтул
+http://metastatic.org/text/libtool.html
+
+Собсно, кусок Слакбука:
+http://jack.kiev.ua/docs/slackbook/package-management-making-packages.html
+
+Весь Слакбук, официальный перевод
+http://jack.kiev.ua/docs/slackbook/book.html
+<(И кстати снова пример оформления текста в html)>
+
+Слакваризация и создание нормальных пакетов в слаке:
+http://www.opennet.ru/base/sys/slackware_pkg.txt.html
+
+Ссылки для прохождения тестов на разработчика Gentoo
+http://www.gentoo.org/proj/en/devrel/handbook/handbook.xml?part=1&chap=2
+http://www.gentoo.org/proj/en/devrel/quiz/ebuild-quiz.txt
+http://www.gentoo.org/proj/en/devrel/quiz/end-quiz.txt
+
+Про систему сборки, альтернативную make
+http://www.boost.org/boost-build2/
+http://forum.swamp.ru/viewtopic.php?p=1800028
+
+Руководство про создание deb-пакета из исходников
+http://forum.ubuntu.ru/index.php?topic=11609.0
+
+Про dpkg и debian maintaining - Полная библия
+http://www.debian.org/doc/maint-guide/
+
+Про dpkg и debian maintaining - мануал по шагам
+http://ubuntuforums.org/showthread.php?t=51003
+
+Про dpkg и debian maintaining - Маленький мануал:
+http://takeworld.blogspot.com/2009/05/deb.html
+
+Построение Мозиллы, описание make, + пример хорошего сайто-дизайна
+https://developer.mozilla.org/en/How_Mozilla%27s_build_system_works
+
+Автоинструменты:
+http://www.lrde.epita.fr/~adl/autotools.html
+http://www.iakovlev.org/index.html?p=682
+
+Редактирование шрифтов в Fontforge
+http://linuxgraphics.ru/articles.php?article_id=10
+
+
+-----------     VIM ------------------
+
+Очередной вим-приход
+http://www.base.vingrad.ru/view/1421-CHto-mozhno-sdelat-interesnogo-v-vim-redaktore
+
+mega-сборник vim
+http://linux.cpms.ru/?p=3979
+
+Крутая статья про Вим
+http://funix.ru/programs_utilities/klavishi-i-kombinacii-klavish-vim.html
+
+Клёвый учебник про Vim
+http://citkit.ru/articles/140/
+
+Про регистры в Vim
+http://habrahabr.ru/blogs/vim/29058/
+
+Подсказки по vim - мегасборник
+http://www.net4me.net/examples/32/net50.html
+
+Хорошее редактирование текста вимом
+http://www.moolenaar.net/habits_ru.html
+
+Шпора от джентушников по виму
+http://www.gentoo.org/doc/ru/vi-guide.xml
+
+Эффективное юзание вима
+http://fatroom.blogspot.com/2007/02/vim.html
+
+Настройка меню и использование интересных фишек с настройками
+http://jenyay.net/Programming/Vim
+
+Ещё вимовские трюки
+http://solarisblog.ru/commands/10-komand-vi-pozvolyayushhie-proizvesti-vpechatlenie-na-druzej
+
+Командный режим в русской раскладке (тупой метод)
+http://www.opennet.ru/tips/info/712.shtml
+
+Блог о виме
+http://www.allaboutvim.ru/2008/01/blog-post.html
+
+Ещё один сборник хаков вима
+http://www.opennet.ru/tips/sml/22.shtml
+
+---------------------------- REPOZ ---------------------------
+
+Модель ветвления с использованием Git
+http://nvie.com/posts/a-successful-git-branching-model/
+перевод:
+http://habrahabr.ru/blogs/Git/106912/
+
+Шляпа про Git на русском
+http://www.freesource.info/wiki/RuslanHihin/gitusermanual
+И труЪ руководство
+http://schacon.github.com/git/user-manual.html
+
+Клёвый-сборник готовых рецептов про гит
+http://linux.yyz.us/git-howto.html
+
+Как победить изменение дат файлов при загрузе в svn
+http://stackoverflow.com/questions/2101153/svn-commit-with-old-date-time
+
+Уживание вместе git-svn
+http://leonid.shevtsov.me/ru/perenos-svn-repozitariya-v-git
+http://linsovet.com/git-svn-sync-changes

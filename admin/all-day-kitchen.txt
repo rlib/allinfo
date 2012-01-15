@@ -1,0 +1,128 @@
+#*. Примонтировать флешку руками
+
+fdisk -l
+находим устройство с флешкой
+либо! втыкаем флешку и через 
+dmesg | tail
+смотрим, какую букву ему ядро присвоило
+mount -o user,iocharset=utf8 -t vfat /dev/sdf1 /mnt/flash
+user на ton менять не надо!
+umount /home/ton/temp
+кодировку можно прописывать и в /etc/fstab, через запятую добавить iocharset=utf8
+
+#*. Добавление юзера в группу
+
+gpasswd -a ton scanner
+
+#*. просмотр оборудования
+
+#установка утилит для PCI, USB, ISA
+emerge -n sys-apps/pciutils
+emerge -n sys-apps/usbutils
+emerge -n sys-apps/isapnptools
+emerge hdparm
+emerge sdparm
+
+опосля этого lspci -v, lsusb (вероятно, только под рутом)
+узнать всякое про диск, подключённый через SATA:
+sdparm -i /dev/sda
+про сидюк, который через IDE подключен:
+hdparm -i /dev/hda
+cat /proc/ide/hda/model
+ещё про диски:
+fdisk -l
+
+ещё офигенный обзор всего железа сразу
+hwinfo --all --short
+
+#*. универсальное копирование фоток с любой камеры
+
+gphoto2 --get-all-raw-data
+
+#*. форматирование флешки
+
+fdisk /dev/sdf
+p	# таблица разделов
+d	# удалить нахер
+n 	# новый
+p	# примак
+1	# номер
+
+
+	# номера цилиндров по умолчанию
+a	# загрузочная активность
+1	# номер
+t	# меняем тип раздела
+7	# тип данных для нормального NTFS
+w	# пишем изменения
+mkfs.ntfs /dev/sdf1
+# пишем физически файловую систему, нужен пакет ntfsprogs
+
+Графикой - через gparted
+
+#*. запись сидюка
+
+графикой - через k3b
+
+консолька:
+cdrecord -scanbus dev=ATA:
+^^^
+это выдаст информацию про сидюки, например такую:
+
+Cdrecord-ProDVD-ProBD-Clone 2.01.01a57 (i686-pc-linux-gnu) Copyright (C) 1995-2009 Jörg Schilling
+scsidev: 'ATA:'
+devname: 'ATA'
+scsibus: -1 target: -1 lun: -1
+Warning: Using badly designed ATAPI via /dev/hd* interface.
+Linux sg driver version: 3.5.27
+Using libscg version 'schily-0.9'.
+scsibus1000:
+        1000,0,0 100000) 'Optiarc ' 'DVD RW AD-7170A ' '1.02' Removable CD-ROM
+        1000,1,0 100001) *
+        1000,2,0 100002) *
+        1000,3,0 100003) *
+        1000,4,0 100004) *
+        1000,5,0 100005) *
+        1000,6,0 100006) *
+        1000,7,0 100007) *
+
+отсюда мы выковыриваем первую строчку из scsibus1000 для параметра dev записи:
+cdrecord -v -eject -dao -dev=1000,0,0 speed=4 isofile.iso
+
+Очистка диска:
+dvd+rw-format -force /dev/dvd
+
+
+#*. настройка микрофона
+
+сначала alsamixer - нихера непонятно там
+команда записи на микрофон в 10 секунд
+arecord -f dat -d 10 -D hw:0,0 test.wav
+команда прослушки
+aplay -f dat test.wav
+команда для просмотра активности микрофона в реальном времени, чтобы 
+ковырять рандомные настройки в alsamixer и угадать, какая из них 
+принадлежит микрофону:
+arecord -vv -fdat test.wav
+
+графика (уже угаданные настройки)
+ставим kmix
+Settings - Configure Settings - включить колонки Mic, Mic Boost, Capture 
+На capture поставить расщепление (split)
+Затем в основном окне на Сapture поставить внизу галку capture
+тогда работает 
+
+#*. настройка web-камеры
+
+lsusb
+смотрим, какой модели камера, у меня Microdia
+emerge -pv x11-drivers/xf86-video-v4l
+USE="ldap v4l v4l2" emerge ekiga
+установить драйвер gscpa v4l2
+(http://moinejf.free.fr + make gspca_sonixj.ko ; sudo make install)
+emerge libv4l
+работает
+
+Скайп сцволочь
+LD_PRELOAD=/usr/lib/libv4l/v4l1compat.so ./skype
+

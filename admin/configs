@@ -1,0 +1,36 @@
+
+/etc/conf.d/local.start - autoload
+
+~/.gvimrc - gvim config
+/etc/fstab - конфиг для автомонтирования файловых систем
+
+/etc/groups - вся инфа по группам юзеров
+cat /etc/group |cut -f1 -d: 	#просмотр всех групп
+grep user /etc/group|cut -f1 -d:	# просмотр всех групп, в которых сидит юзер
+
+
+Prelink:
+/etc/prelink.conf - директории с бинарниками, которые надо прелинкить
+/etc/env.d/03opengl - маскировать opengl от прелинка
+/etc/conf.d/prelink - для запуска prelink в cronе
+
+KDE:
+автозапуск kde
+/etc/env.d/*kdepaths*
+
+Локали:
+/etc/locale.gen + locale-gen
+
+Portage:
+/etc/make.conf              # настройки великого и могучего компиляния
+/etc/portage/mirrors        # список зеркал для emerge, сейчас не влияет
+/etc/portage/package.license # вносить список допустимых лицензий, чтобы размаскировать установку
+
+/etc/portage/package.use - для постоянных параметров компиляции пакетов
+/etc/portage/package.mask + /etc/portage/package.unmask - маска и антимаска
+
+/etc/portage/package.keywords - antimask
+
+X
+/etc/X11/xorg.conf -  великий и ужасный для настройки всего чего можно в иксах
+/etc/hal/fdi/policy/10-x11-input.fdi - волшебный файлик, который в _современных_ иксах хранит инфу про клаву
