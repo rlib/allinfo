@@ -133,6 +133,8 @@ svn propset hrdate "`stat -c %y $filename`" $filename
 touch -d "`svn propget hrdate $filename`" $filename
 ^^^
 вот тебе и хуки, только в циклы загнать
+на практике оказалось несколько геморройнее - это возможно только на клиентской стороне, но не на сервере
+Ибо на сервере уже нет доступа к файлам рабочей копии, с которой закоммитили
 
 svn propset svn:log "* button.c: Fix a compiler warning." -r11 --revprop \
               http://svn.example.com/repos/project
@@ -146,3 +148,28 @@ svnserve -d -r `pwd`/svn
 svn checkout file://localhost/home/ton/arena/svn
 ^^^
 для тестов локального сервака
+
+.subversion/config, global-ignores
+^^^
+конфиг для глобального забивания на добавление через svn add \ import
+
+svn propset svn:ignore -F .cvsignore .
+^^^
+ставим свойство для забивания на файлы для конкретной директории в рабочей копии
+
+svn add --force .
+^^^
+добавление новых файлов с уважением к svn:ignore
+
+svn add *
+svn add --no-ignore .
+^^^
+забивание на svn:ignore, либо по опции, либо из-за явного указания целей, которое происходит при раскрытии спец-символов шелла
+Если командовать так, то свойство svn:ignore не выполнится
+
+svn propset svn:keywords "Date Author" weather.txt
+^^^
+Офигенно! включение "Расширения ключевых слов"
+В файл включаем текстовые якоря, которые дописываются последними значениями при коммите
+В build такой можно зафигачить
+По дефолту ничего подставляться не будет, надо вручную свойство для файла выставить
