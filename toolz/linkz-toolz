@@ -114,3 +114,12 @@ http://linsovet.com/git-svn-sync-changes
 
 Ещё про сохранение timestamp-ов в svn
 http://stackoverflow.com/questions/2171939/how-can-i-keep-original-file-timestamp-on-subversion
+
+Настройка Апача под SVN
+http://www.lissyara.su/articles/freebsd/www/svn+apache+trac/
+
+Полный учебник по SVN
+http://svnbook.red-bean.com/en/1.7
+
+Настройка svnserve под svn!
+http://csoft.net/docs/svnserve.html.en
