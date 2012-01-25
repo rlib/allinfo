@@ -28,3 +28,13 @@ equery which cdrtools
 
 # обновить ebuildы в emerge 
 emerge --sync
+
+# место (файл или каталог) для самостоятельного маскирования пакетов
+/etc/portage/package.mask
+# то же самое для размаскирования!
+/etc/portage/package.unmask
+# замаскированные к установке пакеты от девелоперов, с комментами почему
+/etc/portage/profiles/package.unmask
+
+# чтобы что-то размаскировать, надо или добавить >net-print/foo2zjs-1.2.3, 
+# или net-print/foo2zjs: типа если полный атом, то нужен модификатор для версии
