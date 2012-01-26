@@ -1,6 +1,119 @@
-#*. просмотр настроек оптимизаций компилятора
+http://www.gentoo.org/doc/en/index.xml?catid=desktop
 
-gcc -fverbose-asm -march=native -Q --help=target
+Полный последовательный список
+http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?full=1
+http://www.gentoo.org/doc/en/kernel-config.xml
+http://www.gentoo.org/doc/en/xorg-config.xml
+http://www.gentoo.org/doc/en/nvidia-guide.xml
+http://www.gentoo.org/proj/en/desktop/kde/kde4-guide.xml
+(по кедам особо ничего и не применял)
+http://www.gentoo.org/doc/en/guide-localization.xml
+http://www.gentoo.org/doc/en/utf-8.xml
+http://www.gentoo.org/doc/en/printing-howto.xml
+см. диру gentoo-dokz
+
+Офигеть, можно оказывается на /boot поставить параметр noauto в fstab, тогда всё нормально будет грузиться, но после загрузки /boot будет не примонтирован
+Ы
+
+framebuffer в дженте - ваще пыщ-пыщ - появился после ядра с конфигами из ксорг\нвидиа
+
+И исчез после того, как выключил в Stage Drivers свободный драйвер для nvidia (который nouveau)
+А его выключил для решения вот этой хрени - кстати, хорошо детективное расследование описано
+http://forums.gentoo.org/viewtopic-t-865641-highlight-nouveau.html
+У меня по lspci -k используемый драйвер светился nouveau, и при попытке сделать modprobe nvidia он валился с ошибкой
+error inserting nvidia 3.0.6 no such device
+
+FIXME - Разобраться, как теперь framebuffer вернуть - желательно, uvesa
+
+Чтобы завести X с проприетарными дровами от nvidia, надо было сгенерить nvidia-xconfig, дописать туда секцию с glx, как в guide описано
+FIXME - Но ещё надо как-то избавиться от загрузки dri\dri2, которые вбиты по умолчанию и в конфигах их нет
+У меня их сейчас заменяет glx
+
+Так же печалька обнаружилась по такой схеме:
+откатываемся на старые иксы (через /etc/portage/package.accept_keywords)
+убеждаемся, что проблема не в версиях, и надо вернуть иксы назад
+запускаем 
+
+emerge --update --deep --newuse --with-bdeps=y xorg-server
+
+И он таки _не_ пересобирает свои зависимости, в данном случае драйверы остались старыми
+Мораль истории - обновляться после неудачных откатов надо так:
+# emerge --update --deep --newuse xorg-server
+# emerge --depclean
+# revdep-rebuild
+
+Далее настройка, чтобы startx запускала кеды
+В гиде приводится такое:
+echo XSESSION="KDE-4" > /etc/env.d/90xsession
+(а возможные значения сессий в /etc/X11/Sessions)
+Думал сначала файл такой должен быть, потом допёрло, что его создаём сейчас
+
+Для локализации - консоль вроде УТФ-цирована, но непонятно, как раскладку там переключать
+Маны надо починить - сейчас некоторые отображаются убито
+
+Для юзера команда по добавлению в группы
+usermod -a -G gr1,gr2,gr3 ton
+
+флэшка по-прежнему не открывается сама, печаль
+Сетку с жёстким адресом настроить - опять, куда притулить выполнение скрипта общесистемного
+Шрифтов накачать нормальных разных - gvim блин не открывается
+Шрифты никакие ни при чём - gvim надо было нормально собрать, с USE=gtk
+Другого гуя в основном портаже нету
+TODO - попробовать из оверлея gvim с кутешной мордой
+
+Не проверено
+#Правим для консольных дел:
+#(непонятно, нужно ли)
+#/etc/conf.d/consolefont
+#unicodemap="ruscii"
+
+#Про автомонтирование флешек в KDE
+#dbus во флаги надо было добавлять, дружок
+#http://ru.gentoo-wiki.com/wiki/HOWTO_%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_USB-flash
+# чё-то не помогло мне сие
+Автомонтирование флешек - там какая-то больная и долгоиграющая тема
+
+Можно конечно ещё раз emerge world сделать, фигле
+Вминание! Полное обновление системы выглядит так:
+emerge --deep --update --with-bdeps=y --newuse world
+emerge --depclean
+revdep-rebuild
+
+Настройка печати - для HP LaserJet 1020 - танцы с бубном!
+
+Сначала ставим cups
+emerge cups
+/etc/init.d/cupsd start
+rc-update add cupsd default
+
+Потом танцы с бубном!
+http://www.gentoo-wiki.info/HP_LaserJet_1020
+Во-первых, нужен проприетарный драйвер foo2zjs от HP
+Во-вторых, версия из портежа не работает
+В-третьих, этим принтерам нужно загружать программку к ним в 
+железную память каждый раз, когда их включаешь - для этого используется hotplug
+hotplug конфликтует с udev-ными правилами для принтера! поэтому, чтобы его поставить,
+надо сделать :
+mv /etc/udev/rules.d/70-printers.rules ~/куда-то
+тогда hotplug можно будет ставить! и теперь:
+
+wget -O foo2zjs.tar.gz http://foo2zjs.rkkda.com/foo2zjs.tar.gz
+tar zxf foo2zjs.tar.gz
+cd foo2zjs
+make
+./getweb 1020
+su
+make install
+make install-hotplug
+
+потом перезапустить демона cups
+/etc/init.d/cupsd restart
+
+И после этого всё запечатало
+
+--------------------------------------
+
+Сборка ядра через genkernel
 
 #*. компиляция ядра через genkernel
 
@@ -30,4 +143,9 @@ module-rebuild populate
 #и теперь после перекомпиляции ребилдим
 module-rebuild rebuild
 
+---------------------------------------------
+
+#*. просмотр настроек оптимизаций компилятора
+
+gcc -fverbose-asm -march=native -Q --help=target
 

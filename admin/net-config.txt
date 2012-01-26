@@ -1,0 +1,22 @@
+Setting up network
+
+filling in /etc/rc.d/rc.inet1.conf
+with parameters:
+
+# Config information for eth0:
+IPADDR[0]=""
+NETMASK[0]="255.255.255.0"
+USE_DHCP[0]="yes"
+DHCP_HOSTNAME[0]="192.168.10.1"
+...
+GATEWAY="192.168.10.1"
+/etc/rc.d/rc.inet1 start
+
+ip-adress is given automatically by dhcpd
+
+А вот хардкорно:
+192.168.10.104 - свой айпишник
+
+ifconfig eth0 192.168.10.104 broadcast 192.168.10.255 netmask 255.255.255.0 up
+route add default gw 192.168.10.1
+echo "nameserver 192.168.10.1" >> /etc/resolv.conf

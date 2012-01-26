@@ -1,0 +1,84 @@
+Gonna rusificate
+
+http://www.slackware.ru/wiki/%D0%A0%D1%83%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F_Slackware_12
+
+Terminus:
+http://slackbuilds.org/slackbuilds/12.1/system/terminus-font.tar.gz
+
+Correcting /etc/lilo.conf:
+append=" vt.default_utf8=0"
+
+/etc/rc.d/rc.font
+#setfont -v
+unicode_start LatArCyrHeb-16
+for i in 1 2 3 4 5 6;do
+echo -ne "\033%G" >/dev/tty$i
+done
+
+/etc/rc.d/rc.keymap
+Editing string:
+ /usr/bin/loadkeys /usr/share/kbd/keymaps/i386/qwerty/ru-utf.map.gz
+FIXME - сделать и в консоли переключение по капс-локу
+
+For locale:
+/etc/profile.d/lang.sh
+FIXME - сделать системные сообщения по инглишу, и про переменные вообще почитать
+Надо только, чтобы русский текст распознавался хорошо
+LC_MESSAGES попробовать заангличить
+
+Do not forget!!
+chmod +x /etc/rc.d/rc.font
+chmod +x /etc/rc.d/rc.keymap
+chmod +x /etc/profile.d/lang.sh
+
+Теперь для переключения раскладки в Иксах - вопрос, куда засунуть строчку с setxkbmap
+Надо, чтобы для рутовского логина было то же самое
+setxkbmap -layout "us, ru" -option "grp:caps_toggle"
+Надоело думать, засуну в 
+/etc/X11/xinit/xinitrc -> xinitrc.xfce
+FIXME - Под другими окнами работать не будет, найти место поуниверсальней
+/etc/rc.d/rc.4 - не прокатило, на этот момент ещё видать не подрублены те вещи, которые подхватят изменения иксовых клавиатур
+
+
+setting up mounting /home:
+/etc/fstab
+/dev/sda7        /home            jfs	      defaults         0   0
+
+Correcting /etc/lilo.conf once again, deleting windows menu
++ таймаут убери
+
+In gentoo-handbook excellent description of network setup!! 
+(смотри net-config)
+fullfill:
+USE_DHCP[0]="yes"
+DHCP_HOSTNAME[0]="192.168.10.1"
+...
+GATEWAY="192.168.10.1"
+/etc/rc.d/rc.inet1.conf
+после этого сетку можно поднимать так:
+dhcpcd eth0
+
+User adding:
+useradd -m -G users,disk,lp,wheel,floppy,mail,audio,video,cdrom,games,plugdev,power,scanner -s /bin/bash ton
+
+visudo, раскомменчиваем строчку с wheel
+
+Wohooooo, что я нашёл
+http://www.slackbook.org/beta
+
+Ставим графический режим по умолчанию:
+/etc/inittab
+# ::rasp настраиваем графику на логине
+#id:3:initdefault:
+id:4:initdefault:
+
+И находим баг в настройках - какую бы граф.среду ни выбрали, на загрузке забит жёсткий порядок проверки - gdm, kdm, xdm
+Тут по-хорошему надо скрипт переписать, чтобы он проверял в соответствии с настройками
+А пока поставим свой xfce-шный первым
+Словили на этом глюки - при загрузке на уровне 4 не удаётся запускать gvim у рута либо под sudo, и вообще любые редакторы - пишет, не определён дисплей
+
+Пока откатились на уровень 3
+
+Ручная настройка сети ваще рулит
+
+FIXME - PS1 в консольке настроить - а то некрасиво и неудобно
