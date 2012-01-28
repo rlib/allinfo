@@ -110,3 +110,22 @@ git push -u origin master
 git push origin base.fresh:base.fresh
 ^^^
 заливаем всё из ветки base.fresh и одновременно создаём эту ветку, если её не было
+
+Доступ из-под прокси к удалённому гит-репо!
+
+ставим программу для форвардинга ssh-трафика через http - 
+corkscrew
+
+дальше создаём ~/.ssh/config, туды пишем:
+
+Host github.com
+  ProxyCommand /path/to/corkscrew proxy.host.com 80 %h %p
+  User git
+  Hostname ssh.github.com
+  PreferredAuthentications publickey
+  Port 443
+  IdentityFile "/path/to/.ssh/id_rsa"
+  TCPKeepAlive yes
+  IdentitiesOnly yes
+
+И всё, git дотягивается до github как ни в чём ни бывало
