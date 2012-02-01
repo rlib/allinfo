@@ -24,9 +24,6 @@ svn update
 svn add HR
 ^^^
 добавляем новый объект в рабочую копию (файл или директорию рекурсивно)
-svn add --depth=empty HR
-^^^
-только директорию без содержимого
 svn delete HR
 ^^^
 удаляем объект (начиная только с текущего HEAD и далее, естественно)
@@ -253,6 +250,16 @@ svn propset svn:keywords "Date Author" weather.txt
 В build такой можно зафигачить
 По дефолту ничего подставляться не будет, надо вручную свойство для файла выставить
 
+Sparse directories
+
+svn add --depth=empty HR
+^^^
+добавляем только директорию без содержимого
+опция depth запоминается в рабочей копии!
+svn update --set-depth files
+^^^
+опция set-depth для изменения сохранённой опции depth
+
 ------------------------------------
 
 Combos
@@ -279,6 +286,10 @@ svn status | grep "^\?" | awk '{print $2}' | xargs svn add
 svn checkout ^/dir/dir --depth empty
 ^^^
 скачать рабочую копию, не скачивая содержимое
+
+svn list -vR svn://maa:/repo/elbrus/trunk/src | awk '{if ($3 !="") sum+=$3; } END {print sum/1024000 }'
+^^^
+узнать размер скачиваемого, в мегабайтах
 
 ------------------------------------
 
