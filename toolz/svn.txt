@@ -260,6 +260,12 @@ svn update --set-depth files
 ^^^
 опция set-depth для изменения сохранённой опции depth
 
+*****
+
+Merging
+
+
+
 ------------------------------------
 
 Combos
@@ -290,6 +296,17 @@ svn checkout ^/dir/dir --depth empty
 svn list -vR svn://maa:/repo/elbrus/trunk/src | awk '{if ($3 !="") sum+=$3; } END {print sum/1024000 }'
 ^^^
 узнать размер скачиваемого, в мегабайтах
+
+svn copy http://svn.example.com/repos/calc/trunk \
+         http://svn.example.com/repos/calc/branches/newbranch \
+         -m "Create branch 'newbranch'."
+svn switch ^/calc/branches/newbranch
+^^^
+создание ветки для своих изменений и продолжение работы там
+
+svn co --username admin1 --password pass1
+^^^
+коммиты от произвольных юзеров
 
 ------------------------------------
 
