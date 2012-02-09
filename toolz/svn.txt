@@ -308,6 +308,10 @@ svn co --username admin1 --password pass1
 ^^^
 коммиты от произвольных юзеров
 
+svn diff --summarize
+^^^
+Дифф только со списком файлов
+
 ------------------------------------
 
 deeps & weirds
