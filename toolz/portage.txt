@@ -38,3 +38,13 @@ emerge --sync
 
 # чтобы что-то размаскировать, надо или добавить >net-print/foo2zjs-1.2.3, 
 # или net-print/foo2zjs: типа если полный атом, то нужен модификатор для версии
+
+etc-update
+^^^
+хрень для обновления каталогов, защищенных от авто-обновления при emerge
+
+# правильное полное обновление мира:
+emerge --update --deep --newuse --with-bdeps=y world
+emerge --depclean
+revdep-rebuild
+etc-update
