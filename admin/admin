@@ -172,3 +172,12 @@ ls -v
 r8
 r9
 r10
+
+#*.
+Получить разницу между оригинальной и модифицированной директорией в виде файлового патча
+
+dirOrig='tier'; dirNew='reit'; dirPatch='result' ; \
+mkdir -p $dirPatch ; diff -q -r $dirNew $dirOrig | \
+sed -e "s%Only in $dirNew[\/]\?%%; s/^: //; s%: %\/%" \
+-e "s%Files $dirNew\/%%; s/ and.*$//" | \
+while read fl ; do cp -a --parents ${dirNew}/$fl $dirPatch ; done
