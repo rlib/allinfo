@@ -285,9 +285,13 @@ svn resolve --accept working -R .
 ^^^
 разрулить tree conflict при удалении директорий в рабочей копии
 
-svn status | grep "^\?" | awk '{print $2}' | xargs svn add
+svn status | grep "^\?" | awk '{print $2}' | xargs svn add 
 ^^^
 добавить рекурсивно все новые файлы в директории
+
+svn status | grep "^\?" | awk '{print $2}' | xargs svn add ; client-hook-precommit.sh `pwd`
+^^^
+с необходимым хуком на клиентской стороне
 
 svn checkout ^/dir/dir --depth empty
 ^^^
@@ -311,6 +315,10 @@ svn co --username admin1 --password pass1
 svn diff --summarize
 ^^^
 Дифф только со списком файлов
+
+svn merge -c -392 URL
+^^^
+отменить коммит с номером 392
 
 ------------------------------------
 
