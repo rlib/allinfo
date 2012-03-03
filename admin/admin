@@ -181,3 +181,9 @@ mkdir -p $dirPatch ; diff -q -r $dirNew $dirOrig | \
 sed -e "s%Only in $dirNew[\/]\?%%; s/^: //; s%: %\/%" \
 -e "s%Files $dirNew\/%%; s/ and.*$//" | \
 while read fl ; do cp -a --parents ${dirNew}/$fl $dirPatch ; done
+
+#*.
+просмотр настроек оптимизаций компилятора
+
+gcc -fverbose-asm -march=native -Q --help=target
+
