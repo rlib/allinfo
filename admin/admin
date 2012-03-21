@@ -181,3 +181,14 @@ mkdir -p $dirPatch ; diff -q -r $dirNew $dirOrig | \
 sed -e "s%Only in $dirNew[\/]\?%%; s/^: //; s%: %\/%" \
 -e "s%Files $dirNew\/%%; s/ and.*$//" | \
 while read fl ; do cp -a --parents ${dirNew}/$fl $dirPatch ; done
+
+#*.
+tar cfz ./dir
+tar cfz dir
+^^^
+эта гадость различается!!! и распаковывать её надо по-разному!
+
+tar xfz ./dir
+tar xfz dir
+^^^
+соответственно
