@@ -183,6 +183,11 @@ sed -e "s%Only in $dirNew[\/]\?%%; s/^: //; s%: %\/%" \
 while read fl ; do cp -a --parents ${dirNew}/$fl $dirPatch ; done
 
 #*.
+gcc -fverbose-asm -march=native -Q --help=target
+^^^
+просмотр настроек оптимизаций компилятора
+
+#*.
 tar cfz ./dir
 tar cfz dir
 ^^^

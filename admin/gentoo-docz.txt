@@ -1,0 +1,50 @@
+Здесь общий обзорный список доков для Дженты
+
+http://www.gentoo.org/doc/en/index.xml?catid=desktop
+
+Полный последовательный список
+http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?full=1
+http://www.gentoo.org/doc/en/kernel-config.xml
+http://www.gentoo.org/doc/en/xorg-config.xml
+http://www.gentoo.org/doc/en/nvidia-guide.xml
+http://www.gentoo.org/proj/en/desktop/kde/kde4-guide.xml
+(по кедам особо ничего и не применял)
+http://www.gentoo.org/doc/en/guide-localization.xml
+http://www.gentoo.org/doc/en/utf-8.xml
+http://www.gentoo.org/doc/en/printing-howto.xml
+см. диру gentoo-dokz
+
+
+--------------------------------------
+
+Сборка ядра через genkernel
+
+#*. компиляция ядра через genkernel
+
+# копируем конфиг от генкернела по умолчанию, который стопудняк работает
+zcat /proc/config.gz > /usr/src/linux/.config
+# либо сохраняем текущее уже рабочее
+cp .config .working_config
+
+# заходим в меню и надругиваемся
+make menuconfig
+
+#вот отсюда конфигурация для компиляции берётся по-нормальному:
+cp .config /usr/share/genkernel/arch/x86/kernel-config
+
+#а вот отсюда - гадским genkernel, который юзает кэш после первой удачной компиляции
+cp .config /etc/kernels/kernel-config-x86-2.6.31-gentoo-r10
+
+#аминь
+genkernel all
+# крайний раз компиляция ~ 11 минут
+
+#потом надо переставлять дрова, которые от ядра зависят
+#ставим один раз для сего приблуду
+emerge module-rebuild
+module-rebuild populate
+
+#и теперь после перекомпиляции ребилдим
+module-rebuild rebuild
+
+---------------------------------------------
