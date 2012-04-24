@@ -14,6 +14,13 @@ http://www.gentoo.org/doc/en/utf-8.xml
 http://www.gentoo.org/doc/en/printing-howto.xml
 см. диру gentoo-dokz
 
+man emerge
+^^^
+собсно инструмент к portage
+
+man equery
+^^^
+сборник модулей для разного рода отслеживания\мониторинга файлов
 
 --------------------------------------
 

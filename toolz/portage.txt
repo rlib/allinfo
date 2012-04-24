@@ -48,3 +48,7 @@ emerge --update --deep --newuse --with-bdeps=y world
 emerge --depclean
 revdep-rebuild
 etc-update
+
+equery uses gnumeric
+^^^
+посмотреть, какие use-флаги задействованы в пакете
