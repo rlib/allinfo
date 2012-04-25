@@ -183,7 +183,17 @@ sed -e "s%Only in $dirNew[\/]\?%%; s/^: //; s%: %\/%" \
 while read fl ; do cp -a --parents ${dirNew}/$fl $dirPatch ; done
 
 #*.
+gcc -fverbose-asm -march=native -Q --help=target
+^^^
 просмотр настроек оптимизаций компилятора
 
-gcc -fverbose-asm -march=native -Q --help=target
+#*.
+tar cfz ./dir
+tar cfz dir
+^^^
+эта гадость различается!!! и распаковывать её надо по-разному!
 
+tar xfz ./dir
+tar xfz dir
+^^^
+соответственно
