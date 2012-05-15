@@ -1,72 +1,171 @@
-Gonna rusificate
+Round 2!!
 
-http://www.slackware.ru/wiki/%D0%A0%D1%83%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F_Slackware_12
+Установка слаки на стационаре amd с четырьмя ядрами
+Во-первых, начинаем эксперименты себе на голову:
+Вместо стандартного MBR размечаем диск по схеме GPT!
+Создаём SystemRescueDisk вот отсюда, инструкции на сайте по созданию очень простые:
+http://www.sysresccd.org/Download
+Образ пишем на флешку и на целевой машине грузимся с неё
 
-Terminus:
-http://slackbuilds.org/slackbuilds/12.1/system/terminus-font.tar.gz
+(Собсно, предыстория сего эксперимента - попытка поставить Funtoo, которая обломалась из-за нерабочего dhcpcd, но это только до поры до времени)
 
-Correcting /etc/lilo.conf:
-append=" vt.default_utf8=0"
+Далее, загрузившись, размечаем хард по инструкции отсюда:
+http://www.funtoo.org/wiki/Funtoo_Linux_Installation
+
+Юзаем gdisk, который почти такой же, как fdisk, только для GPT-таблиц
+Разделов 4 обязательных:
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048          206847   500.0 MiB   8300  Linux filesystem
+   2          206848          272383   32.0 MiB    EF02  BIOS boot partition
+   3          272384         8660991   4.0 GiB     8200  Linux swap
+   4         8660992       234441614   107.7 GiB   8300  Linux filesystem
+Но последний раздел сделал маленьким, а оставшийся диск оставил неразмеченным, для последующих систем
+Места под swap грохнул 8 гигов, типа на вырост для оперативы, 2*RAM какбэ
+
+У Слаки в поставке идёт только LILO, только хардкор - а для GPT формата нужен grub
+Поэтому делаем ход конём - при установке Слаки Лило не ставим вообще; а потом создаём загрузочную флешку, которая умеет бутиться в созданный корневой раздел! Есть такая функция, очень полезная
+И пока с флеши позагружаемся, до груба
+
+~~~~~~~~~~~~~~~
+Этап второй - борьба с ебучей сетью
+
+Всё это ниже - Не помогло, сеть так и не работает
+/*
+dhcpcd упорно не работает под обоими дистрибутивами - gentoo, слакой, и systemcd, то есть тремя даже
+При том что по тому же самому проводу Слака на нетбуке поднимает сеть по первому тычку
+Отсюда мысль, что виноваты вовсе не версии dhclient, а сетевые карточки
+А конкретно - вот эта:
+Realtek Semiconductor Co, RTL8111/8168B PCI Express (rev 06)
+
+И таки действительно, не ты первый с такой пичалью:
+http://forums.gentoo.org/viewtopic-p-6927176.html
+
+Оказывается, драйвер под эту карту, вкомпиленный в ядро - кривой:
+lspci -v | less
+Ethernet Controller, blah-blah
+Kernel driver in use: r8169
+Вот эту хрень нужно отстреливать сразу
+Причём это актуально для карт Realtek, у которых rev не очень низкий - по крайней мере не 01, не 02 - чуваки с ними рапортовали, что всё ок; у меня rev 06
+
+А вот рецепт, как собрать руками свой нормальный модуль:
+http://amk1.wordpress.com/2009/06/09/realtek-8168-module-issue/
+
+Исходник лежит здесь:
+http://www.realtek.com/downloads/downloadsView.aspx?Langid=1&PNid=13&PFid=5&Level=5&Conn=4&DownTypeID=3&GetDown=false
+
+Собрать его:
+make clean modules && make install
+
+Далее выпилить текущий кривой драйвер:
+rmmod r8169
+depmod
+modprobe r8168
+update-initramfs -u (!!) 
+*/
+
+Последний вывод, на котором остановились - что вышеприведённая сетевая карта под линуксом вообще не работает
+~~~~~~~~~~~~~~~
+
+Для взлёта Иксов достаточно было поставить ATI-шный видеодрайвер с сайта http://support.amd.com/us/gpudownload/Pages/index.aspx
++ пускануть конфигурилку
+aticonfig --initial --input=/etc/X11/xorg.conf
+
+User adding:
+useradd -m -G users,disk,lp,wheel,floppy,mail,audio,video,cdrom,games,plugdev,power,scanner -s /bin/bash ton
+
+~~~~~~~~~~~~~~~
+
+Русификация utf-8 блеадь!
+
+Ядро надо грузить с параметром
+vt.default_utf=0
+Без этого любой русиш будет отображаться квадратиками
+
+Файло:
+/etc/rc.d/rc.keymap
+ /usr/bin/loadkeys /usr/share/kbd/keymaps/i386/qwerty/ruwin_cplk-UTF-8.map.gz
+
+# в более старых Слаках нужно докопировать отдельно раскладку 
+#http://mlclm.narod.ru/ru-utf.map.gz
+#(Оно же в личном slack-postinst-packs наборе)
+#cp ru-utf.map.gz /usr/share/kbd/keymaps/i386/qwerty
+# /usr/bin/loadkeys /usr/share/kbd/keymaps/i386/qwerty/ru-utf.map.gz
+#Переключение между языками будет по правому Alt + Shift
 
 /etc/rc.d/rc.font
+# This selects your default screen font from among the ones in
+# /usr/share/kbd/consolefonts
+unicode_start cyr-sun16
+
 #setfont -v
-unicode_start LatArCyrHeb-16
-for i in 1 2 3 4 5 6;do
-echo -ne "\033%G" >/dev/tty$i
-done
+#unicode_start LatArCyrHeb-16
+# в одном из мануалов встречались вот такие заклинания, для чего они - не знаю
+#for i in 1 2 3 4 5 6;do
+#echo -ne "\033%G" >/dev/tty$i
+#done
 
-/etc/rc.d/rc.keymap
-Editing string:
- /usr/bin/loadkeys /usr/share/kbd/keymaps/i386/qwerty/ru-utf.map.gz
-FIXME - сделать и в консоли переключение по капс-локу
-
-For locale:
 /etc/profile.d/lang.sh
-FIXME - сделать системные сообщения по инглишу, и про переменные вообще почитать
-Надо только, чтобы русский текст распознавался хорошо
-LC_MESSAGES попробовать заангличить
+export LANG=ru_RU.UTF-8
+# системные телеги будут английскими
+export LANG_MESSAGES="C"
 
 Do not forget!!
 chmod +x /etc/rc.d/rc.font
 chmod +x /etc/rc.d/rc.keymap
 chmod +x /etc/profile.d/lang.sh
 
-Теперь для переключения раскладки в Иксах - вопрос, куда засунуть строчку с setxkbmap
-Надо, чтобы для рутовского логина было то же самое
-setxkbmap -layout "us, ru" -option "grp:caps_toggle"
-Надоело думать, засуну в 
-/etc/X11/xinit/xinitrc -> xinitrc.xfce
-FIXME - Под другими окнами работать не будет, найти место поуниверсальней
-/etc/rc.d/rc.4 - не прокатило, на этот момент ещё видать не подрублены те вещи, которые подхватят изменения иксовых клавиатур
+%%%%
 
+Настройка Кед, чтобы меню были на английском:
+Настройки системы -> Локаль -> Добавить язык, british english
 
-setting up mounting /home:
+В Konsole для отображения буковок нужно не забыть кодировку выставить в utf8
+
+Переключение раскладки в Иксах:
+нужно, чтобы запускалась строка:
+setxkbmap -layout "us, ru" -option "grp:caps_toggle,grp_led:scroll"
+
+Её нельзя поместить в /etc/rc.d/*, на момент выполнения вещей оттуда Иксы не подняты
+Сейчас поместил в /etc/X11/xinit/xinitrc.kde
+FIXME - при использовании других окон надо будет прописывать и для них заново
+Что примечательно, в /etc/X11/xorg.conf эта строка есть даже по умолчанию - и она конечно не работает
+
+%%%%
+
+#Есть также действия для алиасов локалей - однако про них пишут, 
+#что они устарели и все локали должны называться полностью
+#В последней настройке не применялось
+
+для консоли
+/usr/share/locale/locale.alias
+#изменяем строчку
+#russian ...
+#на
+russian ru
+ru ru_RU
+ru_RU ru_RU.UTF-8
+для иксов
+/usr/lib/X11/locale/locale.alias
+
+~~~~~~~~~~~~~~~
+
+Настройка sudo
+visudo
+раскомменчиваем строчку:
+ %wheel ALL=(ALL) ALL
+
+Монтирование харда
+mount /dev/sdb2 /mnt/dark
+
+Нужно скопировать из текущего /home/ton настройки от кед и прочего актуального в /mnt/dark, удалить из /mnt/dark всё, что может помешать примонтировать директорию как нынешний /home/ton; затем:
+
 /etc/fstab
-/dev/sda7        /home            jfs	      defaults         0   0
+/dev/sdb2        /home/ton            reiserfs	      defaults         0   0
 
-Correcting /etc/lilo.conf once again, deleting windows menu
-+ таймаут убери
+~~~~~~~~~~~~~~~
 
-In gentoo-handbook excellent description of network setup!! 
-(смотри net-config)
-fullfill:
-USE_DHCP[0]="yes"
-DHCP_HOSTNAME[0]="192.168.10.1"
-...
-GATEWAY="192.168.10.1"
-/etc/rc.d/rc.inet1.conf
-после этого сетку можно поднимать так:
-dhcpcd eth0
-
-User adding:
-useradd -m -G users,disk,lp,wheel,floppy,mail,audio,video,cdrom,games,plugdev,power,scanner -s /bin/bash ton
-
-visudo, раскомменчиваем строчку с wheel
-
-Wohooooo, что я нашёл
-http://www.slackbook.org/beta
-
-Ставим графический режим по умолчанию:
+Попытка поставить загрузку графического приглашения по умолчанию - успехом не увенчалась, см. ниже
+/*
 /etc/inittab
 # ::rasp настраиваем графику на логине
 #id:3:initdefault:
@@ -78,7 +177,4 @@ id:4:initdefault:
 Словили на этом глюки - при загрузке на уровне 4 не удаётся запускать gvim у рута либо под sudo, и вообще любые редакторы - пишет, не определён дисплей
 
 Пока откатились на уровень 3
-
-Ручная настройка сети ваще рулит
-
-FIXME - PS1 в консольке настроить - а то некрасиво и неудобно
+*/

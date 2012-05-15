@@ -95,6 +95,9 @@ make
 su
 make install
 make install-hotplug
+^^^
+При второй установке этот 70-printers.rules оказался уже тут:
+/lib/udev/rules.d/70-printers.rules
 
 потом перезапустить демона cups
 /etc/init.d/cupsd restart
@@ -118,3 +121,4 @@ http://forums.gentoo.org/viewtopic-t-858965.html
 (сам его создал)
 Неплохо бы его перенести в куда-нить поуниверсальней
 
+Сканер зараза запускается только под рутом - под юзером ошибка с Device is busy
