@@ -1,0 +1,15 @@
+Билдим ведро под слаку
+Как руководство юзаем Алиеновскую вики
+
+Конфиг берём из 
+zcat /proc/config.gz > /usr/src/linux/.config
+
+То, что получилось при конфигурации, сохраняем в 
+/home/ton/var/setz/config-kernel-slack-amd64-workstation
+
+Обязательно нужно было включить экспериментальные опции, это в General Setup самый первый пункт "Prompt for unstable drivers" или в этом духе название
+В этом случае будет поддержка btrfs, на котором у тебя корневой раздел, лол
+
+CONFIG_BTRFS_FS=y
+CONFIG_BTRFS_FS_POSIX_ACL=y
+# CONFIG_BTRFS_FS_CHECK_INTEGRITY is not set
