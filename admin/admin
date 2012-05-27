@@ -188,6 +188,10 @@ gcc -fverbose-asm -march=native -Q --help=target
 ^^^
 просмотр настроек оптимизаций компилятора
 
+gcc -fverbose-asm -march=native -Q --help=target | grep march
+^^^
+флаг для тюнинга компиляции точно под свой камень
+
 #*.
 tar cfz ./dir
 tar cfz dir
