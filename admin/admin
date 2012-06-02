@@ -180,7 +180,7 @@ dirOrig='tier'; dirNew='reit'; dirPatch='result' ;
 mkdir -p $dirPatch ; diff -q -r $dirNew $dirOrig | \
 sed -e "s%Only in $dirNew[\/]\?%%; s/^: //; s%: %\/%" \
 -e "s%Files $dirNew\/%%; s/ and.*$//" | \
-while read fl ; do [ -f "${dirNew}/$fl" ] && cp -a --parents ${dirNew}/$fl $dirPatch ; done ; 
+while read fl ; do [ -f "${dirNew}/$fl" -o -d "${dirNew}/$fl" ] && cp -a --parents ${dirNew}/$fl $dirPatch ; done ; 
 
 
 #*.
