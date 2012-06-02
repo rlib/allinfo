@@ -20,3 +20,6 @@ https://wiki.archlinux.org/index.php/UEFI_Bootloaders
 Про загрузку в UEFI, используя загрузчик, встроенный в линуксовое ядро
 https://lkml.org/lkml/2012/3/16/194
 http://www.rodsbooks.com/efi-bootloaders/efistub.html
+
+Инфа про то, как грузиться в UEFI
+http://www.rodsbooks.com/efi-bootloaders/index.html
