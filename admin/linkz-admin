@@ -150,4 +150,10 @@ http://habrahabr.ru/blogs/linux/99827/
 Обзор про GPT, загрузку из EFI и BIOS
 http://www.rodsbooks.com/gdisk/booting.html
 
+wiki от Арх-линуксоидов про MBR и GPT
+https://wiki.archlinux.org/index.php/GUID_Partition_Table
+wiki от Арх-линуксоидов про архитектуру UEFI 
+https://wiki.archlinux.org/index.php/UEFI
+wiki от Арх-линуксоидов про загрузчики для UEFI 
+https://wiki.archlinux.org/index.php/UEFI_Bootloaders
 
