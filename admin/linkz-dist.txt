@@ -1,0 +1,63 @@
+
+-------------------- Gentoo ----------------------
+
+Руководство по usb вообще и в gentoo в частности - Gentoo Linux USB Guide
+http://www.gentoo.org/doc/en/usb-guide.xml
+
+Про Gentoolkit - тулзы для portage
+http://www.gentoo.org/doc/ru/gentoolkit.xml
+
+Про апгрейд компилятора gcc в Gentoo
+http://www.gentoo.org/doc/en/gcc-upgrading.xml
+
+Про апгрейд самого Gentoo
+http://www.gentoo.org/doc/en/gentoo-upgrading.xml
+
+Как размаскировать пакет в portage
+http://articles.slicehost.com/2009/7/14/gentoo-portage-trouble-shooting
+
+Модификация package.keywords в Portage
+http://www.gentoo-wiki.info/ERROR_Invalid_atom_in_/etc/portage/package.keywords
+
+Написание своего ebuild для установки бинарного пакета в Gentoo (на примере rpm)
+http://www.ylsoftware.com/news/402
+
+Оригинальная документация Gentoo, тысячи её
+http://www.gentoo.org/doc/en/list.xml?desc=1
+
+Тонкости nvidia + Gentoo
+http://www.gentoo.org/doc/en/nvidia-guide.xml
+
+Джентушный народный FAQ
+http://www.opennet.ru/docs/RUS/lor_faq/lorFAQ-4.html
+
+Про оптимизацию при компиляции
+http://www.gentoo.org/doc/en/gcc-optimization.xml
+
+Фокусы с Prelink
+http://www.gentoo.org/doc/en/prelink-howto.xml
+
+Выжимка инфы для установки-настройки Gentoo + мультисистемных вещей
+http://gentoo.theserverside.ru/gentoo-doc/Gentoo_doc-1.5-17.html
+
+Джентушное руководство по кросс-компиляции через emerge
+http://www.gentoo.org/proj/en/base/embedded/handbook/
+
+Gentoo-handbook
+http://www.gentoo.org/doc/en/handbook/handbook-x86.xml
+
+------------------- Соляра ----------------------------------
+
+Сборник индексов на документацию
+http://www.unixpin.com/wordpress/2008/10/02/solaris10-russian-docs/
+
+Сайт про десятую соляру, документация про внутреннее устройство
+http://www.solaris10.ru/
+
+Ещё сайт про Соляру + общениксовые штуки
+http://solarisblog.ru/
+
+Официальный сборник сановских доков
+http://www.oracle.com/technetwork/indexes/documentation/index.html
+
+
