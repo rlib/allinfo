@@ -21,5 +21,8 @@ https://wiki.archlinux.org/index.php/UEFI_Bootloaders
 https://lkml.org/lkml/2012/3/16/194
 http://www.rodsbooks.com/efi-bootloaders/efistub.html
 
-Инфа про то, как грузиться в UEFI
+Обзорная инфа о всех загрузчиках UEFI
 http://www.rodsbooks.com/efi-bootloaders/index.html
+Мануал по загрузке UEFI и взлёту GRUB2
+https://help.ubuntu.com/community/UEFIBooting
+
