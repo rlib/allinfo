@@ -13,3 +13,6 @@ zcat /proc/config.gz > /usr/src/linux/.config
 CONFIG_BTRFS_FS=y
 CONFIG_BTRFS_FS_POSIX_ACL=y
 # CONFIG_BTRFS_FS_CHECK_INTEGRITY is not set
+
+Чтобы скомпилять с ультрабрутальными флагами под процессор, в корневом Makefile ядра дописываем к HOSTCFLAGS
+-march=amdfam10
