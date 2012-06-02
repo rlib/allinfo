@@ -1,15 +1,9 @@
 
-Пра дрова
-http://www.freesoftwaremagazine.com/articles/drivers_linux?page=0,0
-
 мега-свалка ссылок про ниндзя в текстовом режиме
 http://www.linuxcenter.ru/enc/textmode.phtml
 
 Типа мега-книжка, прочекать по тюнингу-разнюхингу системы
 The GNU/Linux Advanced Administration
-
-Про мультизагрузку осей своими руками
-http://www.linuxshare.ru/docs/software/grubbest.html
 
 Theory and practice sometimes clash. And when that happens, theory loses. Every single time. 
 Torvalds, Linus (2009-03-25). Message to Linux kernel mailing list. Retrieved on 2009-03-25
@@ -146,14 +140,4 @@ http://habrahabr.ru/blogs/shells/47915/
 
 Руководство по Linux от отцов-Gentooшников
 http://habrahabr.ru/blogs/linux/99827/
-
-Обзор про GPT, загрузку из EFI и BIOS
-http://www.rodsbooks.com/gdisk/booting.html
-
-wiki от Арх-линуксоидов про MBR и GPT
-https://wiki.archlinux.org/index.php/GUID_Partition_Table
-wiki от Арх-линуксоидов про архитектуру UEFI 
-https://wiki.archlinux.org/index.php/UEFI
-wiki от Арх-линуксоидов про загрузчики для UEFI 
-https://wiki.archlinux.org/index.php/UEFI_Bootloaders
 

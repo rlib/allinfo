@@ -16,3 +16,14 @@ CONFIG_BTRFS_FS_POSIX_ACL=y
 
 Чтобы скомпилять с ультрабрутальными флагами под процессор, в корневом Makefile ядра дописываем к HOSTCFLAGS
 -march=amdfam10
+
+Нужно выставить вот такие настройки:
+CONFIG_EFI=y
+CONFIG_RELOCATABLE=y
+CONFIG_FB_EFI=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_EFI_PARTITION=y
+CONFIG_EFI_VARS=y
+CONFIG_EFI_STUB=y
+
+для поддержки загрузки, используя некро-UEFI

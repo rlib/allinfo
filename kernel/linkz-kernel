@@ -1,2 +1,22 @@
 Руководство от слакеров по сборке ядра из исходников
 http://alien.slackbook.org/dokuwiki/doku.php?id=linux:kernelbuilding
+
+Пра дрова
+http://www.freesoftwaremagazine.com/articles/drivers_linux?page=0,0
+
+Про мультизагрузку осей своими руками
+http://www.linuxshare.ru/docs/software/grubbest.html
+
+Обзор про GPT, загрузку из EFI и BIOS
+http://www.rodsbooks.com/gdisk/booting.html
+
+wiki от Арх-линуксоидов про MBR и GPT
+https://wiki.archlinux.org/index.php/GUID_Partition_Table
+wiki от Арх-линуксоидов про архитектуру UEFI 
+https://wiki.archlinux.org/index.php/UEFI
+wiki от Арх-линуксоидов про загрузчики для UEFI 
+https://wiki.archlinux.org/index.php/UEFI_Bootloaders
+
+Про загрузку в UEFI, используя загрузчик, встроенный в линуксовое ядро
+https://lkml.org/lkml/2012/3/16/194
+http://www.rodsbooks.com/efi-bootloaders/efistub.html
