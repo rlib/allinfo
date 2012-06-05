@@ -52,3 +52,15 @@ etc-update
 equery uses gnumeric
 ^^^
 посмотреть, какие use-флаги задействованы в пакете
+
+equery files cdrkit
+^^^
+посмотреть, какие файлы входят в пакет
+
+portageq owners / /bin/su
+^^^
+посмотреть, к какому пакету относится файл /bin/su
+
+equery list -p -o WORD
+^^^
+поиск по пакетам, включающим в себя WORD
