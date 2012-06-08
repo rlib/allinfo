@@ -475,6 +475,24 @@ svn cp ^/calc/trunk/real.c@807 ./real.c
 *****
 Advanced
 
+svn merge -c 355 ^/calc/trunk
+^^^
+слить только 355-й коммит
+
+svn merge http://../branch1@123 http://../branch2@456 working-copy
+^^^
+Полный синтаксис команды merge
+branch1 - left hand of merge (что было)
+branch2 - right hand of merge (что стало)
+working-copy - адрес рабочей копии, куда изменения слить
+
+svn merge -r 100:200 http://../branch working-copy
+^^^
+Изменения с 100 по 200 ревизию в branch-ветке, положить всё в рабочую копию working-copy
+
+svn merge -r 100:200 http://../branch
+^^^
+Положить намёрженное в текущую директорию, когда последний аргумент не указывается
 
 #svn merge ^/trunk/doc/INSTALL doc/INSTALL -c 958
 ^^^
