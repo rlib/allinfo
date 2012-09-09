@@ -808,15 +808,19 @@ git branch -r
 git init
 ^^^
 создаём нулевой репо 
+
 ssh-keygen -t rsa -C "net@rlib.su"
 ^^^
 генерим пару rsa-ключей
+
 git remote add origin git@github.com:rlib/allinfo.git
 ^^^
 связываемся с удалённым серваком
+
 git push -u origin master
 ^^^
 заливаем всё из ветки master
+
 git push origin base.fresh:base.fresh
 ^^^
 заливаем всё из ветки base.fresh и одновременно создаём эту ветку, если её не было
