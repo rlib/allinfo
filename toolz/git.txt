@@ -776,62 +776,34 @@ git log e2k.oldstable.gstuff --pretty=format: --name-only --diff-filter=A | sort
 ^^^
 Просмотр всех файлов
 
-Копирование себе репозитория
-
-vim ~/.gitconfig
-
 [user]
          name = ton
          email = ton@sample.ru
 [i18n]
     commitencoding = ru_RU.UTF-8
+~/.gitconfig
+^^^
+глобальные настройки гита
 
 rm -rf ./repo
-git clone -n --template /dir/git/templates /auto/allarch/osfs.git ./repo
+git clone -n --template /dir/git/templates /server/dir/project.git ./repo
 cd ./repo
-git fetch origin slack.stable.current:slack.stable.current
-git checkout slack.stable.current
-
-Обновление удалённого репозитария
-git push /auto/allarch/osfs.git slack.stable.current:slack.stable.current
-
-Обновление рабочего репо с удалённого репозитория
-git pull /auto/allarch/osfs.git slack.stable.current
-
-Срезание новой ветки newbranch 
-
-git branch newbranch
-
-Переключение на ветвь
-git checkout slack.debug
-
-сливание ветки new в ветку main
-
-git checkout main
-git merge new
-
-Спасительная команда undo:
-git reset --hard HEAD
-
-git diff branch1..branch2 file.txt
+git fetch origin branch-remote:branch-mine
+git checkout branch-mine 
 ^^^
-выдаём diff для файла для изменений, которые есть в branch2, но нет в branch1
+процедура добывания себе удалённого репо
 
-git fetch 
-команда, качающая внутренние структуры гиторепозитариев с удалённых мест
-
-Посмотреть, какие ветки есть в произвольном удалённом репозитории (не в том, с которого склонировали)
-git remote add svetlana /home/shishor_s/repo
-git fetch svetlana
+git remote add codename /path/to/repo
+git fetch codename
 git branch -r
 ^^^
-теперь команда будет показывать её ветки среди всех остальных удалённых
+Посмотреть, какие ветки есть в произвольном удалённом репозитории (не в том, с которого склонировали)
+теперь команда будет показывать его ветки среди всех остальных удалённых
 (других таких же добавленных и того, с которого склонировали главный репо)
-
 
 -------------------------------------------------
 
-Действия по запиливанию удалённого репозитория
+Действия по запиливанию удалённого репозитория на github
 
 git init
 ^^^
