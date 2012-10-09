@@ -103,3 +103,9 @@ http://www.technovelty.org/code/symbol-visibility.html
 http://stackoverflow.com/questions/5311515/gcc-fpic-option
 http://gcc.gnu.org/onlinedocs/gcc-4.4.6/gcc/Code-Gen-Options.html
 
+Про регистры SPARC
+http://www.sics.se/~psm/sparcstack.html
+
+Соглашения о вызове функций в SPARC
+http://en.wikipedia.org/wiki/Calling_convention#SPARC
+
