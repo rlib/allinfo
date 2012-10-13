@@ -30,6 +30,19 @@ Number  Start (sector)    End (sector)  Size       Code  Name
 
 Сеть работает из коробки через DHCP
 
+Подхачиваем настройку сети:
+В машине две карточки, eth0 + eth1, из них провод воткнут в eth1
+Пишем в /etc/rc.d/rc.inet1.conf:
+
+# Config information for eth0:
+...
+USE_DHCP[0]="no"
+
+# ::rasp выставляем значение USE_DHCP для eth1
+# Config information for eth1:
+...
+USE_DHCP[1]="yes"
+
 ~~~~~~~~~~~~~~~
 
 Для взлёта Иксов достаточно было поставить ATI-шный видеодрайвер с сайта http://support.amd.com/us/gpudownload/Pages/index.aspx
@@ -213,21 +226,6 @@ if [ -f $HOME/.bashrc ] ; then
 fi
 
 Файл наряду с другими файлами *.sh будет исполняться при загрузке /etc/profile, который выполняется при логине любого пользователя
-
-%%%%
-
-Подхачиваем настройку сети:
-В машине две карточки, eth0 + eth1, из них провод воткнут в eth1
-Пишем в /etc/rc.d/rc.inet1.conf:
-
-# Config information for eth0:
-...
-USE_DHCP[0]="no"
-
-# ::rasp выставляем значение USE_DHCP для eth1
-# Config information for eth1:
-...
-USE_DHCP[1]="yes"
 
 %%%%
 
