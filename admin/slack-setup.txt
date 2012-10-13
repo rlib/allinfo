@@ -75,68 +75,6 @@ aticonfig --initial --input=/etc/X11/xorg.conf
 Были такие косяки: консольный framebuffer был весь в поперечных мигающих полосах, а в Кедах на перерисовке окон периодически на долю секунды дёргалась кривая картинка
 Но графика работала и быстро - не медленнее, чем с патентованным драйвером
 
-%%%%
-
-Добавка для ядра 3.2 и выше!!
-С новыми исходниками дефолтный драйвер компилиться перестал
-Мануал, как теперь с этим жить, здесь:
-http://wiki.cchtml.com/index.php/Fedora_16_Installation_Guide
-(секция "проблемы для i686")
-
-Команды оттуда:
-
-INSTALLER=amd-driver-installer-12-4-x86.x86_64.run
-dirInst=fglrx-12.4
-TOP=$(pwd)
-chmod 700 $INSTALLER
-./$INSTALLER --extract $dirInst
-cd $dirInst/common/lib/modules/fglrx/build_mod
-
-echo "\
-fixed fgrlx compilation error on 32-bit x86 arch with kernel 3.3-rc4 due to commit:
-https://github.com/torvalds/linux/commit/f94edacf998516ac9d849f7bc6949a703977a7f3
-later modified (in 3.3-rc5) by commit:
-https://github.com/torvalds/linux/commit/7e16838d94b566a17b65231073d179bc04d590c8#diff-1
-and finally backported to kernel 3.2.8.
-
-Signed-off-by: Gianluca Gennari <gennarone@gmail.com>
----
- firegl_public.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/firegl_public.c b/firegl_public.c
-index 6e0aa82..cb9e217 100644
---- a/firegl_public.c
-+++ b/firegl_public.c
-@@ -5797,10 +5797,16 @@ void ATI_API_CALL KCL_fpu_begin(void)
- #ifdef CONFIG_X86_64
-     kernel_fpu_begin();
- #else
-+#ifndef TS_USEDFPU
-+    preempt_disable();
-+    if (__thread_has_fpu(current))
-+        __save_init_fpu(current);
-+#else
-     struct thread_info *cur_task = current_thread_info();
-     preempt_disable();
-     if (cur_task->status & TS_USEDFPU)
-         __save_init_fpu(cur_task->task);
-+#endif
-     else
-         clts();
- #endif
--- 
-1.7.5.4
-" > fglrx.patch
-
-patch -p1 < ./fglrx.patch
-cd $TOP/$dirInst
-
-sudo ./ati-installer.sh 8.95 --install
-
-
-%%%%
-
 Драйвер версии 12.8 (amd-driver-installer-8.982-x86.x86_64) нормально встаёт на ядра 3.2.*
 
 ~~~~~~~~~~~~~~~
