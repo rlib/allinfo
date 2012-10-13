@@ -27,3 +27,16 @@ CONFIG_EFI_VARS=y
 CONFIG_EFI_STUB=y
 
 для поддержки загрузки, используя некро-UEFI
+
+-------------
+
+Собираем ядро, идущее в Slack-14, но под наш камень
+Для ядра 3.2.29 и gcc-4.7 и конфига, который шёл по умолчанию на диске, вылезла ошибка компиляции ядра
+
+Kernel: arch/x86/boot/bzImage is ready  (#2)
+  Building modules, stage 2.
+  MODPOST 2649 modules
+ERROR: "__modver_version_show" [drivers/staging/rts5139/rts5139.ko] undefined!
+
+Поставил в конфиге 
+#CONFIG_RTS5139=m
