@@ -141,3 +141,17 @@ http://habrahabr.ru/blogs/shells/47915/
 Руководство по Linux от отцов-Gentooшников
 http://habrahabr.ru/blogs/linux/99827/
 
+#----------------------------------------
+#Серия ссылок про низкоуровневую консольную работу
+
+Описание драйверов консоли от ядра
+http://www.kernel.org/doc/Documentation/console/console.txt
+
+Ман про setfont - происходящее при загрузке консольных шрифтов
+http://linux.about.com/library/cmd/blcmdl8_setfont.htm
+
+Описание контрольных кодов, которые воспринимают консольные драйверы
+http://linux.about.com/library/cmd/blcmdl4_console_codes.htm
+
+Ман про устаревший mapsrcrn, но с полезным описанием
+http://linux.about.com/library/cmd/blcmdl8_mapscrn.htm
