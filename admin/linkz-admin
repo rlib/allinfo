@@ -141,3 +141,5 @@ http://habrahabr.ru/blogs/shells/47915/
 Руководство по Linux от отцов-Gentooшников
 http://habrahabr.ru/blogs/linux/99827/
 
+Про работу цепочки init-> getty -> login в linux
+http://www.comptechdoc.org/os/linux/startupman/linux_suiglog.html
