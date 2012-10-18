@@ -94,7 +94,7 @@ unicode_start cyr-sun16
 /etc/profile.d/lang.sh
 export LANG=ru_RU.UTF-8
 # системные телеги будут английскими
-export LANG_MESSAGES="C"
+export LC_MESSAGES="C"
 
 Do not forget!!
 chmod +x /etc/rc.d/rc.font
