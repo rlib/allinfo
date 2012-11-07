@@ -51,3 +51,40 @@ http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595458
 У нас это происходит на ядре 3.2.29
 
 Строим менюшку вручную!
+Для этого сделаем текстовое меню в стиле Grub legacy и переконвертим в новый формат
+
+sudo gvim /boot/grub/menu.lst
+(многострочное echo через sudo не работает! )
+
+# Config file for GRUB2 - The GNU GRand Unified Bootloader
+# /boot/grub/grub.cfg
+
+# manually created as grub-mkconfig failes
+
+# DEVICE NAME CONVERSIONS
+#
+#  Linux           Grub
+# -------------------------
+#  /dev/fd0        (fd0)
+#  /dev/sda        (hd0)
+#  /dev/sdb2       (hd1,2)
+#  /dev/sda3       (hd0,3)
+#
+
+default=0
+timeout=5
+
+title  SlackWare-14.0 Linux 
+root   (hd0,0)
+kernel /vmlinuz-3.2.29-slack14-default root=/dev/sda4 ro vga=793 vt.default_utf=0
+
+#title  SlackWare-14.0 Linux Manual Kernel
+#root   (hd0,0)
+#kernel /vmlinuz-linux root=/dev/sda4 ro vga=793 vt.default_utf=0
+#initrd /initramfs-linux-fallback.img
+
+После этого запускаем генерилку .cfg
+sudo grub-menulst2cfg /boot/grub/menu.lst /boot/grub/grub.cfg
+
+!!! Не забыть положить актуальное ядро в раздел /boot, который находится на /dev/sda1 (а не на флешке или другом читерском загрузчике)
+cp /media/USBSLACK/vmlinuz /boot/vmlinuz-3.2.29-slack14-default
