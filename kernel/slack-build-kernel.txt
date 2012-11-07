@@ -40,3 +40,5 @@ ERROR: "__modver_version_show" [drivers/staging/rts5139/rts5139.ko] undefined!
 
 Поставил в конфиге 
 #CONFIG_RTS5139=m
+
+CONFIG_MMC нужно ставить в y\m - это поддержка чтения карточек памяти, она не помешает
