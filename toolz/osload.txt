@@ -42,3 +42,12 @@ cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 Дальше создаём меню:
 grub-mkconfig -o /boot/grub/grub.cfg
 
+И натыкаемся на косяк:
+/usr/sbin/grub-probe: error: cannot find a device for / (is /dev mounted?).
+
+Точно такие же симптомы описаны здесь:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595458
+И решились они другой версией ядра \ другими конфигами (какими именно - непонятно)
+У нас это происходит на ядре 3.2.29
+
+Строим менюшку вручную!
