@@ -53,7 +53,7 @@ http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595458
 Строим менюшку вручную!
 Для этого сделаем текстовое меню в стиле Grub legacy и переконвертим в новый формат
 
-sudo gvim /boot/grub/menu.lst
+gvim /boot/grub/menu.lst
 (многострочное echo через sudo не работает! )
 
 # Config file for GRUB2 - The GNU GRand Unified Bootloader
