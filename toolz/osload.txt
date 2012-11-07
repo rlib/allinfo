@@ -1,0 +1,19 @@
+# -------------------------------------
+# Информация про запиливание grub2 с нуля на 64-ой Слаке
+
+%%%%%
+# часть первая - для BIOS + GPT
+
+Билдим и устанавливаем пакеты:
+gnu-unifont
+http://slackbuilds.org/repository/14.0/misc/gnu-unifont/
+os-prober
+http://slackbuilds.org/repository/14.0/system/os-prober/
+help2man
+http://slackbuilds.org/repository/14.0/development/help2man/
+grub2
+http://slackbuilds.org/repository/14.0/system/grub2/
+
+Для архитектуры x86_64 в grub2.SlackBuild дописываем в флаги:
+  SLKCFLAGS="-O2 -march=amdfam10 -mtune=amdfam10"
+
