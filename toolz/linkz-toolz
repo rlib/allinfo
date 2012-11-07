@@ -151,6 +151,9 @@ http://slackbuilds.org/repository/14.0/system/grub2/
 Установка grub2 для UEFI в Слаку
 http://docs.slackware.com/howtos:slackware_admin:set_up_grub_as_boot_loader_on_uefi_based_hardware
 
+wiki от Арх-линуксоидов про Grub2
+https://wiki.archlinux.org/index.php/Grub
+
 wiki от Арх-линуксоидов про MBR и GPT
 https://wiki.archlinux.org/index.php/GUID_Partition_Table
 wiki от Арх-линуксоидов про архитектуру UEFI 
