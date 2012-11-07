@@ -11,9 +11,34 @@ os-prober
 http://slackbuilds.org/repository/14.0/system/os-prober/
 help2man
 http://slackbuilds.org/repository/14.0/development/help2man/
-grub2
-http://slackbuilds.org/repository/14.0/system/grub2/
 
+grub2
 Для архитектуры x86_64 в grub2.SlackBuild дописываем в флаги:
   SLKCFLAGS="-O2 -march=amdfam10 -mtune=amdfam10"
+
+http://slackbuilds.org/repository/14.0/system/grub2/
+
+(!!!) Считаем, что наш диск - /dev/sda - не перепутать!
+
+Нужно, чтобы директория /boot была примонтирована на первый раздел диска (/dev/sda1)
+В противном случае при установке данных от grub2 будет:
+/usr/sbin/grub-probe -t fs /boot/grub                        
+/usr/sbin/grub-probe: error: cannot find a device for /boot/grub (is /dev mounted?).
+
+Теперь нужно установить данные grub2, чтобы их подцепил BIOS
+Для этого есть два рекомендуемых метода:
+- вместо MBR
+- положить файл core.img в раздел диска BIOS Boot Sector
+Мы воспользуемся первым (т.к. MBR у нас всё равно нет)
+Второй метод самый безопасный, но для него нужен _ещё_ один загрузчик (syslinux \ grub1), который загрузит core.img в память
+
+(пакет из билда строит нелогичную директорию /usr/lib64/i386-pc, поэтому --target надо указывать именно такую)
+
+modprobe dm-mod
+grub-install --target=i386-pc --recheck --debug /dev/sda
+mkdir -p /boot/grub/locale
+cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+
+Дальше создаём меню:
+grub-mkconfig -o /boot/grub/grub.cfg
 
