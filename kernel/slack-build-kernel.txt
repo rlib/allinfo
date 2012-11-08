@@ -78,5 +78,26 @@ CONFIG_DRM_RADEON=y
 [   62.838358] [drm] radeon: ttm finalized
 [   62.838918] radeon: probe of 0000:01:00.0 failed with error -22
 
+Нужно сказать ядру, откуда брать firmware для radeon
+оно лежит в /lib/firmware/radeon
+
+CONFIG_PREVENT_FIRMWARE_BUILD=y
+CONFIG_FW_LOADER=y
+CONFIG_FIRMWARE_IN_KERNEL=y
+CONFIG_EXTRA_FIRMWARE="radeon/TURKS_mc.bin radeon/TURKS_me.bin radeon/TURKS_pfp.bin radeon/BTC_rlc.bin"
+CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware" 
+
+Можно сделать radeon модулем и как бы загружаемым
+Но печаль в том, что после modprobe выгрузить его обратно уже не получается
+Поэтому вкомпиливаем по-хардкору его в ядро
+
+CONFIG_DRM_RADEON=y
+CONFIG_DRM_RADEON_KMS=y
+CONFIG_FB_RADEON=y
+
+Обычный фреймбуфер нужно выключить (а модулем сделать его нельзя), в противном случае она будет конфликтовать с FB_RADEON и не стартанёт ядро
+# CONFIG_FB_BOOT_VESA_SUPPORT is not set
+# CONFIG_FB_VESA is not set
+
 --------------------------
 
