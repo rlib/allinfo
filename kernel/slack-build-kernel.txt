@@ -42,3 +42,41 @@ ERROR: "__modver_version_show" [drivers/staging/rts5139/rts5139.ko] undefined!
 #CONFIG_RTS5139=m
 
 CONFIG_MMC нужно ставить в y\m - это поддержка чтения карточек памяти, она не помешает
+
+--------------------------
+
+Графика!
+
+Вкомпиливать в ядро uvesa - плохая мысль:
+# CONFIG_FB_UVESA is not set
+
+При запуске она пытается запускать приложения из /sbin - на момент, когда нифига не примонтировано
+
+А теперь битва за включение аппаратного ускорения графики с использованием открытых драйверов
+(DRM, direct rendering)
+
+Для нашей карточки 
+lspci -nn | grep VGA
+01:00.0 VGA compatible controller [0300]: Advanced Micro Devices [AMD] nee ATI Turks [Radeon HD 6570] [1002:6759]
+
+Этому будет соответствовать драйвер radeon и опция в ядре
+CONFIG_DRM_RADEON=y
+
+Если её включить просто так, мы получим:
+
+[   62.834938] ni_cp: Failed to load firmware "radeon/TURKS_pfp.bin"
+[   62.835057] [drm:evergreen_startup] *ERROR* Failed to load firmware!
+[   62.835171] radeon 0000:01:00.0: disabling GPU acceleration
+[   62.836351] radeon 0000:01:00.0: ffff88006b606800 unpin not necessary
+[   62.836468] radeon 0000:01:00.0: ffff88006b606800 unpin not necessary
+[   62.836587] [drm:evergreen_init] *ERROR* radeon: MC ucode required for NI+.
+[   62.836699] radeon 0000:01:00.0: Fatal error during GPU init
+[   62.836810] [drm] radeon: finishing device.
+[   62.837954] [TTM] Finalizing pool allocator
+[   62.838067] [TTM] Finalizing DMA pool allocator
+[   62.838242] [TTM] Zone  kernel: Used memory at exit: 0 kiB
+[   62.838358] [drm] radeon: ttm finalized
+[   62.838918] radeon: probe of 0000:01:00.0 failed with error -22
+
+--------------------------
+
