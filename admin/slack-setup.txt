@@ -55,6 +55,9 @@ aticonfig --initial --input=/etc/X11/xorg.conf
 
 Драйвер версии 12.8 (amd-driver-installer-8.982-x86.x86_64) нормально встаёт на ядра 3.2.*
 
+Нормальная работа radeon с вкомпиленным firmware для 3.6.* - 
+НО есть тормоза со скроллингом в окнах
+
 ~~~~~~~~~~~~~~~
 
 User adding:
