@@ -187,3 +187,5 @@ media-libs/freetype auto-hinter
 Дописываем /etc/fstab всеми разделами с данными, какие есть
 Дописываем в /boot/grub пункты меню - одно с устойчивой gentoo, второе для экспериментов
 
+emerge xfce4-meta
+
