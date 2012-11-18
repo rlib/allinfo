@@ -1,6 +1,7 @@
 Здесь лог настройки и конкретных действий для Дженты
 То, что описано в доках, здесь упоминаться не будет - если это не потребовалось делать как-то иначе \ повторять\проводить любые танцы с бубном
 
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 Офигеть, можно оказывается на /boot поставить параметр noauto в fstab, тогда всё нормально будет грузиться, но после загрузки /boot будет не примонтирован
 Ы
@@ -122,3 +123,67 @@ http://forums.gentoo.org/viewtopic-t-858965.html
 Неплохо бы его перенести в куда-нить поуниверсальней
 
 Сканер зараза запускается только под рутом - под юзером ошибка с Device is busy
+
+
+#-----------------------------------------
+
+round 2!!!
+
+Gentoo на amd64
+
+Базовая установка
+
+handbook по установке + берём последнее ядро, собранное под Слакой, т.к. из-под genkernel ядро не захотело бутиться из grub2
+Выбираем профиль desktop + kde
+Ядро вручную устанавливаем на первый раздел, который при установке не затрагивался и создан был в Слаке
+handbook локализация + utf-8
+
+emerge vim, аррргх
+
+Значение всякого из  /etc/portage/make.conf 
+(включены те, что добавились после хендбуков)
+
+CFLAGS="-march=amdfam10 -mtune=amdfam10 -O2 -pipe -fomit-frame-pointer"
+USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome libkms truetype type1"
+LINGUAS="en ru"
+VIDEO_CARDS="dummy fbdev mga r128 radeon v4l vesa vmware"
+
+Хендбук по X + gentoo-wiki про radeon
+В итоге Иксы с открытыми дровами на ATI Turks [Radeon HD 6570]
+В новом ядре на разогрев драйвера уходит заметно больше времени, чем под Слакой + xfce4
+
+Делаем процедуру облагораживания мира (полный обнов, depclean, revdep-rebuild)
+
+Размаскируем тестинг на razorqt-meta
+emerge razorqt-meta
+
+Нет нормального запускателя сесии! Тырим данный файл из Слаковского билда и ставим сюда
+cp $SLACKROOT/etc/X11/xinit/xinit.razorqt /etx/X11/Sessions/razorqt
+
+Куда-нибудь в /etc/env.d пишем
+XSESSION="razorqt"
+EDITOR="vim"
+
+emerge pmount
+emerge sudo
+emerge layman
+
+Добавляем юзера
+useradd -m -G users,disk,lp,wheel,floppy,mail,audio,video,cdrom,plugdev -s /bin/bash ton
+
+Делаем нормальные шрифты
+
+sudo emerge -n terminus-font intlfonts freefonts cronyx-fonts corefonts kbd alee-fonts ttf-bitstream-vera unifont dejavu
+Для freetype добавляем USE:
+media-libs/freetype auto-hinter
+И в /etc/portage/make.conf в USE флаги добавляем truetype type1, если их не было
+
+Пересобираем всё - шрифты ваще шикарные, лучше чем где угодно
+
+# --------------------------------------------
+
+# облагораживаем хозяйство
+
+Дописываем /etc/fstab всеми разделами с данными, какие есть
+Дописываем в /boot/grub пункты меню - одно с устойчивой gentoo, второе для экспериментов
+
