@@ -13,3 +13,7 @@ http://ru.gentoo-wiki.com/wiki/HOWTO_Udev_%D0%B8_%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%
 setterm -dump 1 -file screen.dump
 ^^^
 захватывать уже выведенный вывод с консоли в файл
+
+mutagen - тулкит для работы с тегами аудио на Питоне
+Скрипт оттуда для конверта тегов на нормальный русский
+mid3iconv --remove-v1 -d -e "cp1251"
