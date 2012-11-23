@@ -109,3 +109,5 @@ http://www.sics.se/~psm/sparcstack.html
 Соглашения о вызове функций в SPARC
 http://en.wikipedia.org/wiki/Calling_convention#SPARC
 
+Про visibility в ELF
+http://gcc.gnu.org/wiki/Visibility
