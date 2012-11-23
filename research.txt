@@ -30,25 +30,12 @@ mc курить или какой файл-менеджер
 ------------------------
 -----  чинить ----------
 
-Gentoo (старая)
-framebuffer под gentoo - uvesa желательно (+ kms, что это такое ваще, kernel modesetting)
-Gentoo - Избавиться от загрузки dri\dri2, которые вбиты по умолчанию и в конфигах их нет
-У меня их сейчас заменяет glx
-Gentoo - русификация консоли: нет шрифтов русских; раскладка не переключается; 
-man groupadd убитый
-gentoo - Автомонтирование флешек от юзера в кедах
-
 Слака
 
-Как на запуске взводить XAUTHORITY, .kde/Autostart не работает
 Grub установить
-Ошибка кодеков:
 
-Movie-Aspect is 2.37:1 - prescaling to correct movie aspect.
-VO: [xv] 720x304 => 720x304 Planar YV12 
-A:   6.4 V:   6.4 A-V:  0.003 ct: -0.025 155/155  7%  1%  0.4% 5 0 
-X11 error: BadValue (integer parameter out of range for operation)
-X11 error: BadValue (integer parameter out of range for operation)
+Amarok mp3 не играет
 
+Внутри Konsole коммиты закривились - когда переходит в vim для написания коммента к коммиту, картинка в Konsole не меняется - и перерисовывается только если размер окна Konsole поменять
 
-Графика - отключение эффектов KDE и их влияние на ускорение
+Как загружать xfce4 через kdm либо установить какой-то оконный менеджер, который будет грузить xfce, либо сделать xdm более гламурным

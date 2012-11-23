@@ -27,108 +27,33 @@ Number  Start (sector)    End (sector)  Size       Code  Name
 И пока с флеши позагружаемся, до груба
 
 ~~~~~~~~~~~~~~~
-Этап второй - борьба с ебучей сетью
 
-Всё это ниже - было не нужно, сеть работала совсем из-за другого
-/*
-dhcpcd упорно не работает под обоими дистрибутивами - gentoo, слакой, и systemcd, то есть тремя даже
-При том что по тому же самому проводу Слака на нетбуке поднимает сеть по первому тычку
-Отсюда мысль, что виноваты вовсе не версии dhclient, а сетевые карточки
-А конкретно - вот эта:
-Realtek Semiconductor Co, RTL8111/8168B PCI Express (rev 06)
+Сеть работает из коробки через DHCP
 
-И таки действительно, не ты первый с такой пичалью:
-http://forums.gentoo.org/viewtopic-p-6927176.html
+Подхачиваем настройку сети:
+В машине две карточки, eth0 + eth1, из них провод воткнут в eth1
+Пишем в /etc/rc.d/rc.inet1.conf:
 
-Оказывается, драйвер под эту карту, вкомпиленный в ядро - кривой:
-lspci -v | less
-Ethernet Controller, blah-blah
-Kernel driver in use: r8169
-Вот эту хрень нужно отстреливать сразу
-Причём это актуально для карт Realtek, у которых rev не очень низкий - по крайней мере не 01, не 02 - чуваки с ними рапортовали, что всё ок; у меня rev 06
+# Config information for eth0:
+...
+USE_DHCP[0]="no"
 
-А вот рецепт, как собрать руками свой нормальный модуль:
-http://amk1.wordpress.com/2009/06/09/realtek-8168-module-issue/
+# ::rasp выставляем значение USE_DHCP для eth1
+# Config information for eth1:
+...
+USE_DHCP[1]="yes"
 
-Исходник лежит здесь:
-http://www.realtek.com/downloads/downloadsView.aspx?Langid=1&PNid=13&PFid=5&Level=5&Conn=4&DownTypeID=3&GetDown=false
-
-Собрать его:
-make clean modules && make install
-
-Далее выпилить текущий кривой драйвер:
-rmmod r8169
-depmod
-modprobe r8168
-update-initramfs -u (!!) 
-*/
-
-Выяснилось, что провайдер привязывался к MAC-адресу и новую карточку не подрубал
-Волшебный звонок всё решил, и сеть изначально была рабочей
 ~~~~~~~~~~~~~~~
 
 Для взлёта Иксов достаточно было поставить ATI-шный видеодрайвер с сайта http://support.amd.com/us/gpudownload/Pages/index.aspx
 + пускануть конфигурилку
 aticonfig --initial --input=/etc/X11/xorg.conf
 
-%%%%
+В 14-й Слаке на ядре 3.2.29 открытые дрова неплохо работали, и Иксы с ними взлетали
+Были такие косяки: консольный framebuffer был весь в поперечных мигающих полосах, а в Кедах на перерисовке окон периодически на долю секунды дёргалась кривая картинка
+Но графика работала и быстро - не медленнее, чем с патентованным драйвером
 
-Добавка для ядра 3.2 и выше!!
-С новыми исходниками дефолтный драйвер компилиться перестал
-Мануал, как теперь с этим жить, здесь:
-http://wiki.cchtml.com/index.php/Fedora_16_Installation_Guide
-(секция "проблемы для i686")
-
-Команды оттуда:
-
-INSTALLER=amd-driver-installer-12-4-x86.x86_64.run
-dirInst=fglrx-12.4
-TOP=$(pwd)
-chmod 700 $INSTALLER
-./$INSTALLER --extract $dirInst
-cd $dirInst/common/lib/modules/fglrx/build_mod
-
-echo "\
-fixed fgrlx compilation error on 32-bit x86 arch with kernel 3.3-rc4 due to commit:
-https://github.com/torvalds/linux/commit/f94edacf998516ac9d849f7bc6949a703977a7f3
-later modified (in 3.3-rc5) by commit:
-https://github.com/torvalds/linux/commit/7e16838d94b566a17b65231073d179bc04d590c8#diff-1
-and finally backported to kernel 3.2.8.
-
-Signed-off-by: Gianluca Gennari <gennarone@gmail.com>
----
- firegl_public.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/firegl_public.c b/firegl_public.c
-index 6e0aa82..cb9e217 100644
---- a/firegl_public.c
-+++ b/firegl_public.c
-@@ -5797,10 +5797,16 @@ void ATI_API_CALL KCL_fpu_begin(void)
- #ifdef CONFIG_X86_64
-     kernel_fpu_begin();
- #else
-+#ifndef TS_USEDFPU
-+    preempt_disable();
-+    if (__thread_has_fpu(current))
-+        __save_init_fpu(current);
-+#else
-     struct thread_info *cur_task = current_thread_info();
-     preempt_disable();
-     if (cur_task->status & TS_USEDFPU)
-         __save_init_fpu(cur_task->task);
-+#endif
-     else
-         clts();
- #endif
--- 
-1.7.5.4
-" > fglrx.patch
-
-patch -p1 < ./fglrx.patch
-cd $TOP/$dirInst
-
-sudo ./ati-installer.sh 8.95 --install
+Драйвер версии 12.8 (amd-driver-installer-8.982-x86.x86_64) нормально встаёт на ядра 3.2.*
 
 ~~~~~~~~~~~~~~~
 
@@ -169,7 +94,7 @@ unicode_start cyr-sun16
 /etc/profile.d/lang.sh
 export LANG=ru_RU.UTF-8
 # системные телеги будут английскими
-export LANG_MESSAGES="C"
+export LC_MESSAGES="C"
 
 Do not forget!!
 chmod +x /etc/rc.d/rc.font
@@ -200,6 +125,10 @@ chmod +x /etc/rc.d/rc.postxinit
 ln -s /etc/rc.d/rc.postxinit ~/.kde/Autostart
 
 Что примечательно, в /etc/X11/xorg.conf эта строка есть даже по умолчанию - и она конечно не работает
+
+Для xfce4 можно открыть Настройки -> Сеансы и Запуск, и добавить в автозапуск при входе произвольную команду со своим описанием
+Дописал туда 
+/etc/rc.d/rc.postxinit
 
 %%%%
 
@@ -241,12 +170,15 @@ visudo
 Чтобы при вызове sudo сохранялись данные о графической сессии юзера и можно было открывать новые граф.приложения, нужно под юзером явно взводить переменную XAUTHORITY - тогда она будет сохраняться и под sudo
 В XAUTHORITY хранится файл с печеньем о графической сессии
 
+В Иксах 7.7 внутри Слаки-14 XAUTHORITY взводится по-умолчанию при запуске startx руками
+А если поставить автозагрузку на логине в графику - то нет!
+
+Пишем в скрипт, который нужно будет добавить как программу для автостарта в графической среде:
+
 # ::rasp взводим XAUTHORITY явно
 if [ -f $HOME/.Xauthority ] ; then
     export XAUTHORITY=$HOME/.Xauthority
 fi
-FIXME
-В какой файл это писать - ныне непонятно! Сейчас записано в самописный /etc/rc.d/rc.postxinit, но при запуске из $HOME/.kde/Autostart взведение этой переменной не работает : (
 
 %%%%
 
@@ -267,6 +199,10 @@ mount /dev/sdb2 /mnt/dark
 /etc/fstab
 /dev/sdb2        /home/ton            reiserfs	      defaults         0   0
 
+Чтобы был виден загрузочный раздел:
+(в конец /etc/fstab )
+/dev/sda1        /boot                ext2       defaults         0   0
+
 ~~~~~~~~~~~~~~~
 
 Настройка прочих нужных действий по умолчанию при загрузке
@@ -279,6 +215,10 @@ mount /dev/sdb2 /mnt/dark
 id:4:initdefault:
 
 Чтобы нормально работали графические приложения под su/sudo, нужно их настроить (см. выше)
+
+Проблема, если юзаем xfce4 по умолчанию - в /etc/rc.d/rc.4 первым прописан запуск kdm, который загрузит - сюрприз - KDE
+Исправили тем, что запуск xdm поставили первым
+Он исправно загрузил xfce4, но выглядит куцо
 
 %%%%
 
@@ -299,18 +239,9 @@ fi
 
 %%%%
 
-Подхачиваем настройку сети:
-В машине две карточки, eth0 + eth1, из них провод воткнут в eth1
-Пишем в /etc/rc.d/rc.inet1.conf:
+Отключаем вывод "новостей" и mail при логине - мешает только
 
-# Config information for eth0:
-...
-USE_DHCP[0]="no"
-
-# ::rasp выставляем значение USE_DHCP для eth1
-# Config information for eth1:
-...
-USE_DHCP[1]="yes"
+touch ~/.hushlogin
 
 %%%%
 
@@ -325,6 +256,18 @@ USE_DHCP[1]="yes"
 Но! Все подряд так оборачивать нельзя, потому что это убьёт экспорт переменных из этих скриптов
 Нужно глазами смотреть, что там ничего нужного не взводится
 
+%%%%
+
+Добавление драйверов по умолчанию при загрузке
+(В частности, драйверов для card-reader-а)
+
+В файл /etc/rc.d/rc.modules дописываем:
+#::rasp подключение драйвера для sdhci по умолчанию
+/sbin/modprobe sdhci
+/sbin/modprobe mmc_block
+
+/etc/rc.d/rc.modules - ссылка на rc.modules-3.2.29, после переустановки нового ядра нужно будет хачить заново!
+
 ~~~~~~~~~~~~~~~
 
 Настройка фреймбуфера
@@ -333,3 +276,9 @@ USE_DHCP[1]="yes"
 (чтобы не грузилось сразу по умолчанию, в syslinux.cfg поставить параметр prompt 1)
 У меня заработал vga=793
 Более старшие он может не узнать и потребовать ввести их ещё раз в 16-чном формате (с новой таблицей для них), и оттуда уже узнает
+
+~~~~~~~~~~~~~~~
+
+Настройка внутре окон
+
+В Konsole не забыть выставить Scrolling - Unlimited

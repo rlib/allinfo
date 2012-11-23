@@ -92,3 +92,20 @@ http://www.cyberciti.biz/tips/linux-core-dumps.html
 
 Отладка на левеле ниндзя - сборник полукнижек
 http://www.troubleshooters.com/debug_like_ninja.htm
+
+Описание, как устроен тип union в С
+http://www.eecs.ucf.edu/~leavens/larchc++manual/lcpp_185.html
+
+Про опцию fvisibility
+http://www.technovelty.org/code/symbol-visibility.html
+
+Про опцию fPIC
+http://stackoverflow.com/questions/5311515/gcc-fpic-option
+http://gcc.gnu.org/onlinedocs/gcc-4.4.6/gcc/Code-Gen-Options.html
+
+Про регистры SPARC
+http://www.sics.se/~psm/sparcstack.html
+
+Соглашения о вызове функций в SPARC
+http://en.wikipedia.org/wiki/Calling_convention#SPARC
+
