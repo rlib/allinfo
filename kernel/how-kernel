@@ -11,3 +11,41 @@ DRM включён
 
 Отключение всех эффектов KDE не дало ничего, xrender вместо opengl тоже
 Причём это в xfce4, а не в KDE(!)
+
+*) Не просто тормоза, но ещё и очень нестабильная работа с этим драйвером
+Во-первых, вначале он разогревается долго и неопределённое время, пока не разогрет - адовое изображение
+Может и зависнуть
+
+Выдача при разогреве 
+[  228.026049] radeon 0000:01:00.0: GPU lockup CP stall for more than 10000msec
+[  228.026054] radeon 0000:01:00.0: GPU lockup (waiting for 0x0000000000000170 last fence id 0x0000000000000165)
+[  228.027106] radeon 0000:01:00.0: Saved 375 dwords of commands on ring 0.
+[  228.027108] radeon 0000:01:00.0: GPU softreset 
+[  228.027110] radeon 0000:01:00.0:   GRBM_STATUS=0xA0003828
+[  228.027112] radeon 0000:01:00.0:   GRBM_STATUS_SE0=0x00000007
+[  228.027115] radeon 0000:01:00.0:   GRBM_STATUS_SE1=0x00000007
+[  228.027121] radeon 0000:01:00.0:   SRBM_STATUS=0x200000C0
+[  228.027127] radeon 0000:01:00.0:   R_008674_CP_STALLED_STAT1 = 0x00000000
+[  228.027131] radeon 0000:01:00.0:   R_008678_CP_STALLED_STAT2 = 0x00010100
+[  228.027133] radeon 0000:01:00.0:   R_00867C_CP_BUSY_STAT     = 0x00020180
+[  228.027135] radeon 0000:01:00.0:   R_008680_CP_STAT          = 0x80038042
+[  228.027140] radeon 0000:01:00.0:   GRBM_SOFT_RESET=0x00007F6B
+[  228.027243] radeon 0000:01:00.0:   GRBM_STATUS=0x00003828
+[  228.027245] radeon 0000:01:00.0:   GRBM_STATUS_SE0=0x00000007
+[  228.027247] radeon 0000:01:00.0:   GRBM_STATUS_SE1=0x00000007
+[  228.027249] radeon 0000:01:00.0:   SRBM_STATUS=0x200000C0
+[  228.027250] radeon 0000:01:00.0:   R_008674_CP_STALLED_STAT1 = 0x00000000
+[  228.027252] radeon 0000:01:00.0:   R_008678_CP_STALLED_STAT2 = 0x00000000
+[  228.027254] radeon 0000:01:00.0:   R_00867C_CP_BUSY_STAT     = 0x00000000
+[  228.027256] radeon 0000:01:00.0:   R_008680_CP_STAT          = 0x00000000
+[  228.028258] radeon 0000:01:00.0: GPU reset succeeded, trying to resume
+[  228.031027] [drm] probing gen 2 caps for device 1022:1707 = 2/0
+[  228.031028] [drm] enabling PCIE gen 2 link speeds, disable with radeon.pcie_gen2=0
+[  228.032842] [drm] PCIE GART of 512M enabled (table at 0x0000000000040000).
+[  228.032950] radeon 0000:01:00.0: WB enabled
+[  228.032953] radeon 0000:01:00.0: fence driver on ring 0 use gpu addr 0x0000000040000c00 and cpu addr 0xffff88006b50ac00
+[  228.049260] [drm] ring test on 0 succeeded in 2 usecs
+[  228.253945] [drm] ib test on ring 0 succeeded in 0 usecs
+
+
+*) Во-вторых, в рандомные моменты он сплитит экран пополам
