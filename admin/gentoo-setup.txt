@@ -174,8 +174,6 @@ useradd -m -G users,disk,lp,wheel,floppy,mail,audio,video,cdrom,plugdev -s /bin/
 Делаем нормальные шрифты
 
 sudo emerge -n terminus-font intlfonts freefonts cronyx-fonts corefonts kbd alee-fonts ttf-bitstream-vera unifont dejavu
-Для freetype добавляем USE:
-media-libs/freetype auto-hinter
 И в /etc/portage/make.conf в USE флаги добавляем truetype type1, если их не было
 
 Пересобираем всё - шрифты ваще шикарные, лучше чем где угодно
