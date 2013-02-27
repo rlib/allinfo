@@ -111,3 +111,6 @@ http://en.wikipedia.org/wiki/Calling_convention#SPARC
 
 Про visibility в ELF
 http://gcc.gnu.org/wiki/Visibility
+
+Почему LD_LIBRARY_PATH не очень
+http://xahlee.info/UnixResource_dir/_/ldpath.html
