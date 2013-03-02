@@ -34,3 +34,9 @@ kldload if_ath
 /boot/load.conf
 ^^^
 Конфиг о том, какие модули грузить при старте
+
+В попытке загрузить карточку делаем kldload bwn
+Получаем:
+iwn0: Intel Centrino Wireless-N 130
+adapter type 12 not supported
+Чип не поддержан в драйверах, обломинго
