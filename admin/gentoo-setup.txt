@@ -191,3 +191,6 @@ emerge xfce4-meta
 В razor-qt не удалось починить все глюки + заметные тормоза на qt-шных окнах
 
 emerge eix
+
+Во время одного из апдейтов мира делаем
+merge --unmerge sys-apps/module-init-tools
