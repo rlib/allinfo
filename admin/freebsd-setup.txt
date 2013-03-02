@@ -1,0 +1,1 @@
+# Лог установки и настройки FreeBSD 9.1 на Toshiba Portege с core i7
