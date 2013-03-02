@@ -15,17 +15,6 @@ revdep-rebuild
  * packages containing binaries and libraries broken by a package update
  * will be emerged
 
-# просмотр возможных профилей
-eselect profile list
-+ eselect --help
-
-# программы для работы с установкой
-gentoolkit 	- поиск зависимостей
-eix 		- поиск по описаниям
-
-# поиск пути к сборочным файлам
-equery which cdrtools
-
 # обновить ebuildы в emerge 
 emerge --sync
 
@@ -49,6 +38,19 @@ emerge --depclean
 revdep-rebuild
 etc-update
 
+# наборы для работы с установкой
+gentoolkit - набор из equery, eselect, euse, eread, revdep-rebuild
+eix 		- поиск по описаниям
+equery - разное про зависимости
+
+# просмотр возможных профилей
+eselect profile list
++ eselect --help
+
+equery which cdrtools
+^^^
+поиск пути к сборочным файлам
+
 equery uses gnumeric
 ^^^
 посмотреть, какие use-флаги задействованы в пакете
@@ -64,3 +66,7 @@ portageq owners / /bin/su
 equery list -p -o WORD
 ^^^
 поиск по пакетам, включающим в себя WORD
+
+equery depends WORD
+^^^
+посмотреть все пакеты, зависящие от WORD
