@@ -194,3 +194,14 @@ emerge eix
 
 Во время одного из апдейтов мира делаем
 merge --unmerge sys-apps/module-init-tools
+
+
+#-----------------------------------------
+
+round 3 !!!
+
+Установка Gentoo amd64 на некробук Toshiba Portege Z930
+
+Образ minimal install пишем на флешку
+
+
