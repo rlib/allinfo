@@ -204,4 +204,19 @@ round 3 !!!
 
 Образ minimal install пишем на флешку
 
+Дальше веселье с wifi-карточкой
+Хочу всё качать через wifi
+Адаптер там - Intel Centrino N2230
+Для него надо доставить firmware
+В моём случае это iwlwifi-2030-ucode-18.168.6.1
+Пишем на вторую флешку, записываем в ФС загрузочной флешки, затем
 
+mv iwlwifi-2030-ucode-18.168.6.1 /lib/firmware
+ln -s iwlwifi-2030-ucode-18.168.6.1/iwlwifi-2030-6.ucode /lib/firmware
+^^^
+нужно, чтобы в директории он видел файл ucode непосредственно
+
+modprode -r iwlwifi
+modprode iwlwifi
+
+wlan0 поднялся
