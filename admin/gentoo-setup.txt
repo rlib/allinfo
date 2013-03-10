@@ -220,3 +220,10 @@ modprode -r iwlwifi
 modprode iwlwifi
 
 wlan0 поднялся
+
+iwlist wlan0 scan >& wifi-nets.txt
+^^^
+определяем доступные wifi-сети
+их имена будут с ключом "ESSID"
+
+дальше нужно настроить доступ к сети с шифрованием WPA2 через wpa_supplicant
