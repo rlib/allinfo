@@ -227,3 +227,31 @@ iwlist wlan0 scan >& wifi-nets.txt
 их имена будут с ключом "ESSID"
 
 дальше нужно настроить доступ к сети с шифрованием WPA2 через wpa_supplicant
+/etc/conf.d/net
+^^^
+общие настройки, пишем туда:
+modules="wpa_supplicant"
+wpa_supplicant_wlan0="-Diwlwifi"
+
+modules="wpa_supplicant"
+^^^
+показываем, что используем wpa_supplicant по умолчанию (супротив дефолтных wireless-tools)
+
+wpa_supplicant_wlan0="-Diwlwifi"
+^^^
+указываем явно драйвер, чтобы не угадывал
+
+/etc/wpa_supplicant/wpa_supplicant.conf
+^^^
+теперь настройки для самого wpa_supplicant
+
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+ap_scan=1
+
+network={
+  ssid="net-name"
+  psk="very secret passphrase"
+  priority=5
+}
+
