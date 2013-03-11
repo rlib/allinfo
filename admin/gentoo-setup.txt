@@ -374,3 +374,13 @@ echo "Europe/Moscow" > /etc/timezone
 
 воспользуемся genkernel-ом, чтобы получить заведомо рабочее ядро
 (затем оттюнингованное соберём руками)
+
+emerge gentoo-sources
+^^^
+с подготовленными USE-флагами это зацепит 70 пакетов!
+emerge genkernel
+genkernel --menuconfig all
+
+ls /boot/kernel* /boot/initramfs*
+^^^
+записываем названия ядра и initramfs для загрузчика
