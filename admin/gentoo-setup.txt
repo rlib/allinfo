@@ -362,3 +362,15 @@ eselect profile list
 eselect profile set 3
 ^^^
 смотрим доступные профили (совокупности USE-флагов) и выбираем default/linux/amd64/13.0/desktop
+
+cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+echo "Europe/Moscow" > /etc/timezone
+^^^
+настраиваем правильную тайм-зону
+
+********************
+
+Собираем ядро - 1
+
+воспользуемся genkernel-ом, чтобы получить заведомо рабочее ядро
+(затем оттюнингованное соберём руками)
