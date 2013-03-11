@@ -231,13 +231,13 @@ iwlist wlan0 scan >& wifi-nets.txt
 ^^^
 общие настройки, пишем туда:
 modules="wpa_supplicant"
-wpa_supplicant_wlan0="-Diwlwifi"
+wpa_supplicant_wlan0="-Dwext"
 
 modules="wpa_supplicant"
 ^^^
 показываем, что используем wpa_supplicant по умолчанию (супротив дефолтных wireless-tools)
 
-wpa_supplicant_wlan0="-Diwlwifi"
+wpa_supplicant_wlan0="-Dwext"
 ^^^
 указываем явно драйвер, чтобы не угадывал
 
