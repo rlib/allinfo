@@ -390,3 +390,34 @@ ls /boot/kernel* /boot/initramfs*
 записываем названия ядра и initramfs для загрузчика
 kernel-genkernel-x86_64-3.7.10-gentoo
 initramfs-genkernel-x86_64-3.7.10-gentoo
+
+********************
+
+Системная конфигурация
+
+пишем /etc/fstab
+
+/etc/conf.d/hostname
+^^^
+выставляем имя хоста
+
+копируем etc/conf.d/net из окружения флешки в чрут
+дописываем туда:
+#config_eth0="dhcp"
+^^^
+чтобы eth0 был наготове, когда понадобится воткнуть провод
+
+cd /etc/init.d
+ln -s net.lo net.eth0
+ln -s net.lo net.wlan0
+rc-update add net.eth0 default
+rc-update add net.wlan0 default
+^^^
+добавляем автозагрузку сетевых интерфейсов
+
+кладём из окружения флешки /lib/firmware/iwl* в /mnt/gentoo/lib/firmware
+emerge wpa_supplicant
+^^^
+ставим wpa_supplicant внутрь /mnt/gentoo
+копируем конфиг для него etc/wpa_supplicant/wpa_supplicant.conf
+
