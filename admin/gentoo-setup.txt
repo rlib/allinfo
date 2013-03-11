@@ -379,8 +379,14 @@ emerge gentoo-sources
 ^^^
 с подготовленными USE-флагами это зацепит 70 пакетов!
 emerge genkernel
+cd /usr/src/linux
 genkernel --menuconfig all
+^^^
+запуск genkernel, но с предварительными правками конфига по дефолту
+добавляем только поддержку jfs и btrfs в самом ядре вместо модулей
 
 ls /boot/kernel* /boot/initramfs*
 ^^^
 записываем названия ядра и initramfs для загрузчика
+kernel-genkernel-x86_64-3.7.10-gentoo
+initramfs-genkernel-x86_64-3.7.10-gentoo
