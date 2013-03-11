@@ -286,3 +286,19 @@ ip addr del <ADDR> dev <INTERFACE>
 30 Gb  - Lunux Partition - под /
 08 Gb  - Lunux Partition - под /var
 20 Gb  - Linux Partition - резервный раздел под юзерское осенезависимое пространство (когда внешнего жирного винта нет)
+
+создаём файловые системы:
+
+Для UEFI доки предписывают только FAT32
+Для корня был бы неплох btrfs, но нету mkfs.btrfs в минимальном установочном образе
+Для юзерских данных - jfs как многообещающую
+reiserfs для /var (то есть компиляции всего из портежа) посмотрим, как себя зарекомендует
+
+mkfs.ext4 /dev/sda1
+mkfs.vfat /dev/sda2
+mkswap /dev/sda3
+swapon /dev/sda3
+mkfs.jfs /dev/sda4
+mkreiserfs /dev/sda5
+mkfs.jfs /dev/sda6
+
