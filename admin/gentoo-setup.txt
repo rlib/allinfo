@@ -321,3 +321,25 @@ date 031123342013
 
 cd /mnt/gentoo
 tar xvjpf /root/stage3-*.tar.bz2
+
+Пишем в etc/portage/make.conf
+
+CFLAGS="-O2 -pipe -fomit-frame-pointer -march=native"
+MAKEOPTS="-j4"
+GENTOO_MIRRORS="http://gentoo.bloodhost.ru/ http://gentoo.localhost.net.ar/ http://ftp.dei.uc.pt/pub/linux/gentoo/ "
+SYNC="rsync://rsync1.ru.gentoo.org/gentoo-portage"
+USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome truetype type1 oss"
+LINGUAS="en ru"
+
+Сохраняем настройки DNS
+cp -L /etc/resolv.conf /mnt/gentoo/etc/
+^^^
+-L чтобы копировать не ссылку
+
+mount -t proc none /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+^^^
+запиливаем ядерные файловые системы в новое окружение
+rbind - для того, чтобы маунтились все суб-системы внутри директорий
+забавное использование - получается, mount-ом можно сказать, что произвольная директория (не только файл) теперь отражается и в другой директории тоже 
