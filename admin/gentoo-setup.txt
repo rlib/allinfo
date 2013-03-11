@@ -329,8 +329,14 @@ CFLAGS="-O2 -pipe -fomit-frame-pointer -march=native"
 MAKEOPTS="-j4"
 GENTOO_MIRRORS="http://gentoo.bloodhost.ru/ http://gentoo.localhost.net.ar/ http://ftp.dei.uc.pt/pub/linux/gentoo/ "
 SYNC="rsync://rsync1.ru.gentoo.org/gentoo-portage"
-USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome truetype type1 oss -alsa"
+USE="mmx sse sse2 "
+#USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome truetype type1 oss -alsa"
 LINGUAS="en ru"
+
+До того, как мы на постоянной основе забутимся в gentoo с диска, есть смысл оставить минимум USE-флагов
+Во время настройки нам потребуется емёрджить тулзы для ядра, сети, железа
+С флагами, выставленными в максимум, их установка значительно растянется
+После того, как в минимальной конфигурации станет возможно забутиться, уже можно включить полные USE-флаги и сделать emerge --update --newuse --with-bdeps=y --deep world
 
 Сохраняем настройки DNS
 cp -L /etc/resolv.conf /mnt/gentoo/etc/
