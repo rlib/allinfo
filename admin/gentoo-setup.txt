@@ -329,7 +329,7 @@ CFLAGS="-O2 -pipe -fomit-frame-pointer -march=native"
 MAKEOPTS="-j4"
 GENTOO_MIRRORS="http://gentoo.bloodhost.ru/ http://gentoo.localhost.net.ar/ http://ftp.dei.uc.pt/pub/linux/gentoo/ "
 SYNC="rsync://rsync1.ru.gentoo.org/gentoo-portage"
-USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome truetype type1 oss"
+USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome truetype type1 oss -alsa"
 LINGUAS="en ru"
 
 Сохраняем настройки DNS
@@ -350,3 +350,15 @@ source /etc/profile
 export PS1="(chroot) $PS1"
 ^^^
 чрутимся в систему, развёрнутую из stage3
+
+mkdir /usr/portage
+emerge-webrsync
+emerge --sync
+emerge --oneshot -u portage
+^^^
+получаем последний portage
+
+eselect profile list
+eselect profile set 3
+^^^
+смотрим доступные профили (совокупности USE-флагов) и выбираем default/linux/amd64/13.0/desktop
