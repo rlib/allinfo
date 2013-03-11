@@ -302,3 +302,12 @@ mkfs.jfs /dev/sda4
 mkreiserfs /dev/sda5
 mkfs.jfs /dev/sda6
 
+mkdir -p /mnt/gentoo/var
+mkdir -p /mnt/gentoo/boot
+
+mount /dev/sda4 /mnt/gentoo
+mount /dev/sda5 /mnt/gentoo/var
+mount /dev/sda1 /mnt/gentoo/boot
+
+********************
+
