@@ -255,3 +255,6 @@ network={
   priority=5
 }
 
+wpa_supplicant -c/etc/wpa_supplicant/wpa_supplicant.conf -B -iwlan0
+^^^
+ввод интерфейса в сеть через wpa_supplicant ; -B - бэкграунд
