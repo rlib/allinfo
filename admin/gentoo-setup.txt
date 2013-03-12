@@ -540,11 +540,23 @@ modprobe efivars ничего не даёт
 insmod /lib/modules/.../zfs.ko говорит:
 could not insert module zfs.ko invalid module format
 
-настройка конфига:
-
-/boot/grub2/grub.conf
+Настройка конфига:
+По идее, grub2 сам сканит директории, определяет ядра \ initramfs и генерит конфиг
+grub2-mkconfig -o /boot/grub2/grub.cfg
 ^^^
-пишем конфиг:
+сканирование и автоматическое создание конфига
+заработало, конфиг сгенерил 
+(ошибки с zfs по-прежнему сыплет)
+
+kernel-version*
+initramfs-version*
+^^^
+такой шаблон должен быть у ядер\initrd, чтобы grub2 их нашёл
+
+На всякий случай, описывается создание grub.conf руками (старый формат grub-legacy)
+
+/boot/grub2/grub.legacy.conf
+^^^
 default 0
 timeout 10
 
