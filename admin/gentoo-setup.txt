@@ -527,6 +527,19 @@ grub2-install --target=x86_64-efi
 ^^^
 устанавливаем файлы grub2 в /boot/grub2 и /boot/efi
 
+FIXME:
+При установке получаем жалобы на zfs:
+
+Failed to load ZFS module stack.
+Load the module manually by running 'insmod <location>/zfs.ko'
+...
+Fatal: Couldn't open either sysfs or procfs directories for accessing EFI variables.
+Try modprobe efivars as root.
+
+modprobe efivars ничего не даёт
+insmod /lib/modules/.../zfs.ko говорит:
+could not insert module zfs.ko invalid module format
+
 настройка конфига:
 
 /boot/grub2/grub.conf
