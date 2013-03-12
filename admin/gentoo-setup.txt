@@ -427,3 +427,94 @@ emerge wpa_supplicant
 ставим wpa_supplicant внутрь /mnt/gentoo
 копируем конфиг для него etc/wpa_supplicant/wpa_supplicant.conf
 
+ставим рутовый пароль
+
+/etc/conf.d/keymaps
+^^^
+ставим переключение раскладки, пишем туда
+keymap="ruwin_cplk-UTF-8"
+
+/etc/conf.d/hwclock
+^^^
+ставим значение 
+clock="local"
+
+/etc/locale.gen
+^^^
+пишем системную локаль
+ru_RU.UTF-8 UTF-8
+
+locale-gen
+^^^
+генерируем файлы локали
+
+/etc/env.d/02locale
+^^^
+пишем значение
+LANG="ru_RU.UTF-8"
+LC_MESSAGES="C"
+LC_COLLATE="C"
+это выставит системную локаль по умолчанию при загрузке
+
+emerge syslog-ng
+emerge logrotate
+rc-update add syslog-ng default
+^^^
+устанавливаем системный логгер
+
+emerge vixie-cron
+rc-update add vixie-cron default
+^^^
+устанавливаем демон крона
+
+emerge mlocate
+^^^
+устанавливаем базу данных с индексами файлов
+
+emerge reiserfsprogs
+emerge jfsutils
+emerge dhcpcd
+^^^
+устанавливаем нужный стафф
+
+********************
+
+Устанавливаем загрузчик
+
+Ставим grub2 с загрузкой через UEFI
+
+/etc/portage/make.conf
+GRUB_PLATFORMS="efi-64"
+^^^
+описываем режим efi, который поддерживает grub
+
+/etc/portage/package.use
+^^^
+добавляем поддержку zfs:
+sys-boot/grub libzfs
+
+/etc/portage/package.accept_keywords
+^^^
+размаскировываем:
+sys-boot/efibootmgr
+sys-boot/grub
+sys-fs/zfs
+sys-fs/zfs-kmod
+sys-kernel/spl
+
+emerge grub:2
+^^^
+собираем grub2 во втором слоте с поддержкой UEFI
+(grub в слоте по умолчанию - grub legacy, не умеющий в это)
+
+
+********************
+
+Сбор кошерного мира
+
+emerge pmount
+emerge sudo
+emerge layman
+^^^
+ставим нужные полезности
+
