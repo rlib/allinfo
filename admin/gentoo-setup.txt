@@ -507,6 +507,38 @@ emerge grub:2
 собираем grub2 во втором слоте с поддержкой UEFI
 (grub в слоте по умолчанию - grub legacy, не умеющий в это)
 
+emerge os-prober
+^^^
+ставим автоопределятель операционок
+
+настраиваем grub2 по доке
+http://wiki.gentoo.org/wiki/GRUB2_Quick_Start
++ хендбук
+
+grep -v rootfs /proc/mounts > /etc/mtab
+^^^
+дока пишет, что grub-install не будет работать из коробки из-за того, что мы в чруте
+нужно сообщить о всех примонтированных разделах
+
+mkdir -p /boot/efi
+mount /dev/sda2 /boot/efi
+
+grub2-install --target=x86_64-efi
+^^^
+устанавливаем файлы grub2 в /boot/grub2 и /boot/efi
+
+настройка конфига:
+
+/boot/grub2/grub.conf
+^^^
+пишем конфиг:
+default 0
+timeout 10
+
+title Gentoo Linux 3.7.10 Genkernel
+root (hd0,0)
+kernel /boot/kernel-genkernel-x86_64-3.7.10-gentoo
+initrd /boot/initramfs-genkernel-x86_64-3.7.10-gentoo
 
 ********************
 
