@@ -527,14 +527,20 @@ grub2-install --target=x86_64-efi
 ^^^
 устанавливаем файлы grub2 в /boot/grub2 и /boot/efi
 
+Получаем эпик фейл:
+Fatal: Couldn't open either sysfs or procfs directories for accessing EFI variables.
+Try modprobe efivars as root.
+
+Проблема оказалась в том, что установку файлов для EFI можно провести, только если мы
+загружены в EFI, в противном случае в ведре не будет каких-то волшебных переменных
+Ха-ха
+Теперь надо искать, как загрузиться в EFI с флешки
+
 FIXME:
 При установке получаем жалобы на zfs:
 
 Failed to load ZFS module stack.
 Load the module manually by running 'insmod <location>/zfs.ko'
-...
-Fatal: Couldn't open either sysfs or procfs directories for accessing EFI variables.
-Try modprobe efivars as root.
 
 modprobe efivars ничего не даёт
 insmod /lib/modules/.../zfs.ko говорит:
@@ -546,7 +552,6 @@ grub2-mkconfig -o /boot/grub2/grub.cfg
 ^^^
 сканирование и автоматическое создание конфига
 заработало, конфиг сгенерил 
-(ошибки с zfs по-прежнему сыплет)
 
 kernel-version*
 initramfs-version*
