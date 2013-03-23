@@ -542,7 +542,6 @@ FIXME:
 Failed to load ZFS module stack.
 Load the module manually by running 'insmod <location>/zfs.ko'
 
-modprobe efivars ничего не даёт
 insmod /lib/modules/.../zfs.ko говорит:
 could not insert module zfs.ko invalid module format
 
