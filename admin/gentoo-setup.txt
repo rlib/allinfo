@@ -580,6 +580,7 @@ emerge layman
 ставим нужные полезности
 
 После обновления udev до udev-200 сносим его нафиг и заменяем на eudev:
+echo "=sys-fs/eudev-1_beta4-r1" >> /etc/portage/package.accept_keywords
 emerge --unmerge udev
 emerge eudev
 revdep-rebuild
