@@ -579,3 +579,7 @@ emerge layman
 ^^^
 ставим нужные полезности
 
+После обновления udev до udev-200 сносим его нафиг и заменяем на eudev:
+emerge --unmerge udev
+emerge eudev
+revdep-rebuild
