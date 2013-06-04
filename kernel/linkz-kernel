@@ -8,3 +8,5 @@ http://www.freesoftwaremagazine.com/articles/drivers_linux?page=0,0
 https://lkml.org/lkml/2012/3/16/194
 http://www.rodsbooks.com/efi-bootloaders/efistub.html
 
+Отладка по ядрёной ФС /proc
+http://blog.tanelpoder.com/2013/02/21/peeking-into-linux-kernel-land-using-proc-filesystem-for-quickndirty-troubleshooting/
