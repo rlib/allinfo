@@ -38,6 +38,9 @@ emerge --depclean
 revdep-rebuild
 etc-update
 
+# исключение пакета из набора, собранного на emerge
+emerge world --exclude "sys-kernel/linux-headers"
+
 # наборы для работы с установкой
 gentoolkit - набор из equery, eselect, euse, eread, revdep-rebuild
 eix 		- поиск по описаниям
