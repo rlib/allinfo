@@ -584,3 +584,32 @@ echo "=sys-fs/eudev-1_beta4-r1" >> /etc/portage/package.accept_keywords
 emerge --unmerge udev
 emerge eudev
 revdep-rebuild
+
+********************
+
+Настраиваем оверлей
+
+source /var/lib/layman/make.conf
+^^^
+пишем в /etc/portage/make.conf, чтобы portage подхватывал установленные оверлеи
+
+eix-remote update
+^^^
+загружаем базу оверлеев
+
+layman -L
+^^^
+посмотреть базу известных оверлеев
+
+layman -a <NAME>
+^^^
+добавить оверлей
+
+layman -l
+^^^
+посмотреть локально установленные оверлеи
+
+layman -S
+^^^
+обновить оверлеи наподобие --sync
+
