@@ -70,41 +70,6 @@ emerge --deep --update --with-bdeps=y --newuse world
 emerge --depclean
 revdep-rebuild
 
-Настройка печати - для HP LaserJet 1020 - танцы с бубном!
-
-Сначала ставим cups
-emerge cups
-/etc/init.d/cupsd start
-rc-update add cupsd default
-
-Потом танцы с бубном!
-http://www.gentoo-wiki.info/HP_LaserJet_1020
-Во-первых, нужен проприетарный драйвер foo2zjs от HP
-Во-вторых, версия из портежа не работает
-В-третьих, этим принтерам нужно загружать программку к ним в 
-железную память каждый раз, когда их включаешь - для этого используется hotplug
-hotplug конфликтует с udev-ными правилами для принтера! поэтому, чтобы его поставить,
-надо сделать :
-mv /etc/udev/rules.d/70-printers.rules ~/куда-то
-тогда hotplug можно будет ставить! и теперь:
-
-wget -O foo2zjs.tar.gz http://foo2zjs.rkkda.com/foo2zjs.tar.gz
-tar zxf foo2zjs.tar.gz
-cd foo2zjs
-make
-./getweb 1020
-su
-make install
-make install-hotplug
-^^^
-При второй установке этот 70-printers.rules оказался уже тут:
-/lib/udev/rules.d/70-printers.rules
-
-потом перезапустить демона cups
-/etc/init.d/cupsd restart
-
-И после этого всё запечатало
-
 Настройка гадского KDE, чтобы выполнял системные настройки, выключение, втык флешек и тыды
 Сначала собираем с новым флагом policykit - мол обязательный для такого
 Нихрена не помогло - в kde-стаффе такого флага вообще нет
@@ -569,6 +534,11 @@ root (hd0,0)
 kernel /boot/kernel-genkernel-x86_64-3.7.10-gentoo
 initrd /boot/initramfs-genkernel-x86_64-3.7.10-gentoo
 
+
+#-----------------------------------------
+
+# round all
+
 ********************
 
 Сбор кошерного мира
@@ -612,4 +582,43 @@ layman -l
 layman -S
 ^^^
 обновить оверлеи наподобие --sync
+
+********************
+
+Оборудование
+
+Настройка печати - для HP LaserJet 1020 - танцы с бубном!
+
+Сначала ставим cups
+emerge cups
+/etc/init.d/cupsd start
+rc-update add cupsd default
+
+Потом танцы с бубном!
+http://www.gentoo-wiki.info/HP_LaserJet_1020
+Во-первых, нужен проприетарный драйвер foo2zjs от HP
+Во-вторых, версия из портежа не работает
+В-третьих, этим принтерам нужно загружать программку к ним в 
+железную память каждый раз, когда их включаешь - для этого используется hotplug
+hotplug конфликтует с udev-ными правилами для принтера! поэтому, чтобы его поставить,
+надо сделать :
+mv /etc/udev/rules.d/70-printers.rules ~/куда-то
+тогда hotplug можно будет ставить! и теперь:
+
+wget -O foo2zjs.tar.gz http://foo2zjs.rkkda.com/foo2zjs.tar.gz
+tar zxf foo2zjs.tar.gz
+cd foo2zjs
+make
+./getweb 1020
+su
+make install
+make install-hotplug
+^^^
+При второй установке этот 70-printers.rules оказался уже тут:
+/lib/udev/rules.d/70-printers.rules
+
+потом перезапустить демона cups
+/etc/init.d/cupsd restart
+
+И после этого всё запечатало
 
