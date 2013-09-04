@@ -622,3 +622,23 @@ make install-hotplug
 
 И после этого всё запечатало
 
+********************
+
+Настройка печати для Canon Pixma iP7240
+
+Дрова называются net-print/cnijfilter-drivers, и в основном портеже их нет
+Подключаем оверлей sabayon
+
+net-print/cnijfilter-drivers ip7200
+^^^
+в /etc/portage/package.use пишем, какие конкретно дрова
+
+net-print/cnijfilter-drivers
+net-print/cnijfilter
+^^^
+в /etc/portage/package.accept_keywords, размаскировываем для amd64
+
+emerge net-print/cnijfilter-drivers
+^^^
+собсно ставим
+
