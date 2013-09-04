@@ -642,3 +642,5 @@ emerge net-print/cnijfilter-drivers
 ^^^
 собсно ставим
 
+Для дров происходит вот это:
+http://bugs.sabayon.org/show_bug.cgi?id=4348
