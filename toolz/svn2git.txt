@@ -37,4 +37,6 @@ git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
 
 Can't locate SVN/Core.pm in @INC (@INC contains: <...> .) at <git-pref>/lib/perl5/site_perl/5.8.8/Git/SVN/Utils.pm line 6.
 
+strace -f -o try-to-open.log git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
+Пытается открыть перловые модули SVN-а, которых в системе нет
 
