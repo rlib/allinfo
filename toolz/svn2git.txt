@@ -1,0 +1,36 @@
+Хроника перевода svn на git на системе без рутовых прав
+
+*)
+
+Сбор email-ов :
+cd svn-work-copy
+
+#!/usr/bin/env bash
+authors=$(svn log -q | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
+for author in ${authors}; do
+  echo "${author} = <NAME> ${author}";
+done
+
+Нужно задать карту имён: логины svn = реальные мыла
+В нашем случае логины svn тоже реальные мыла
+
+*)
+
+Собираем git с поддержкой svn
+
+cd git-master
+make
+make install
+^^^
+Установит в домашнюю директорию, и норм
+Если что, добавить ~/bin в PATH
+
+*)
+
+Создаём временный git-репо для переноса
+
+mkdir -p /dir/tmp
+cd /dir/tmp
+git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
+
+
