@@ -71,5 +71,6 @@ Alien-SVN-v1.7.3.1/src/subversion/subversion/bindings/swig/INSTALL
 
 make swig-pl
 make install-swig-pl
-
-Надо будет указать, как по нестандартному пути перловые файлы ставить
+cd subversion/bindings/swig/perl/native
+perl Makefile.PL PREFIX=${SVNROOT}/Alien/SVN
+make install
