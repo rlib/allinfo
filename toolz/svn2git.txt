@@ -40,3 +40,36 @@ Can't locate SVN/Core.pm in @INC (@INC contains: <...> .) at <git-pref>/lib/perl
 strace -f -o try-to-open.log git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
 Пытается открыть перловые модули SVN-а, которых в системе нет
 
+*) Начинаем геморрой установки всего, что не хватает для этих модулей
+
+Сами модули - SVN::Core, "perl bindings for subversion"
+
+Для их установки используем Alien-SVN-v1.7.3.1
+
+cd Alien-SVN-v1.7.3.1
+mkdir -p SVN
+SVNROOT=`pwd`/SVN
+perl Build.PL
+
+Нужен > sqlite-3.7.6.3
+Качаем sqlite-amalgamation-3080002
+
+mkdir -p src/subversion/sqlite-amalgamation
+cp ../sqlite-amalgamation-3080002/sqlite3.c src/subversion/sqlite-amalgamation/sqlite3.c
+
+Запускаем опять 
+perl Build.PL
+
+В опции подаём 
+
+--libdir=${SVNROOT}/Alien/SVN --prefix=<default> --perl=<default> CFLAGS="-I${SVNROOT}/usr/include" LDFLAGS="-L${SVNROOT}/usr/lib"
+Запускаем на компиляцию
+./Build
+
+Мануал
+Alien-SVN-v1.7.3.1/src/subversion/subversion/bindings/swig/INSTALL
+
+make swig-pl
+make install-swig-pl
+
+Надо будет указать, как по нестандартному пути перловые файлы ставить
