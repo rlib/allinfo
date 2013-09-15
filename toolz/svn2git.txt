@@ -44,11 +44,11 @@ strace -f -o try-to-open.log git svn init http://code.yoursite.net/svn/trunk/ --
 
 Сами модули - SVN::Core, "perl bindings for subversion"
 
-Для их установки используем Alien-SVN-v1.7.3.1
+Для их установки используем Alien-SVN-v1.7.3.1 - специальный wrapper для этого
 
-cd Alien-SVN-v1.7.3.1
 mkdir -p SVN
 SVNROOT=`pwd`/SVN
+cd Alien-SVN-v1.7.3.1
 perl Build.PL
 
 Нужен > sqlite-3.7.6.3
