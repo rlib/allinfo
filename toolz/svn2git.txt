@@ -62,15 +62,15 @@ perl Build.PL
 
 В опции подаём 
 
---libdir=${SVNROOT}/Alien/SVN --prefix=<default> --perl=<default> CFLAGS="-I${SVNROOT}/usr/include" LDFLAGS="-L${SVNROOT}/usr/lib"
+--libdir=${SVNROOT} --prefix=<default> --perl=<default> CFLAGS="-I${SVNROOT}/usr/include" LDFLAGS="-L${SVNROOT}/usr/lib"
 Запускаем на компиляцию
 ./Build
 
 Мануал
 Alien-SVN-v1.7.3.1/src/subversion/subversion/bindings/swig/INSTALL
 
+cd src/subversion
 make swig-pl
-make install-swig-pl
 cd subversion/bindings/swig/perl/native
-perl Makefile.PL PREFIX=${SVNROOT}/Alien/SVN
+perl Makefile.PL PREFIX=${SVNROOT}
 make install
