@@ -74,3 +74,16 @@ make swig-pl
 cd subversion/bindings/swig/perl/native
 perl Makefile.PL PREFIX=${SVNROOT}
 make install
+
+*)
+
+Устанавливаем, где искать SVN-модули
+
+export PERL5LIB=$SVNROOT/lib/perl5/site_perl/5.8.8/i686-linux
+export LD_LIBRARY_PATH=$SVNROOT
+
+*) 
+
+Таки создаём временный git-репо для переноса
+
+git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
