@@ -14,6 +14,8 @@ done
 Нужно задать карту имён: логины svn = реальные мыла
 В нашем случае логины svn тоже реальные мыла
 
+anikin_a@mcst.ru = anikin_a <anikin_a@mcst.ru>
+
 *)
 
 Собираем git с поддержкой svn
@@ -87,3 +89,6 @@ export LD_LIBRARY_PATH=$SVNROOT
 Таки создаём временный git-репо для переноса
 
 git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
+
+Указываем карту авторов коммитов
+git config svn.authorsfile /path/to/authors.txt
