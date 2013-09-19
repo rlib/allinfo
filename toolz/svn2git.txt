@@ -92,3 +92,18 @@ git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
 
 Указываем карту авторов коммитов
 git config svn.authorsfile /path/to/authors.txt
+
+*) 
+
+Кодировка
+Если в ~/.gitconfig указаны поля commitEncoding \ logOutputEncoding, то их надо указывать как
+utf8
+а не 
+ru_RU.utf8
+Вторая запись не работает
+
+*)
+
+Переносим данные
+
+git svn fetch
