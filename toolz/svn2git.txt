@@ -107,3 +107,12 @@ ru_RU.utf8
 Переносим данные
 
 git svn fetch
+
+*)
+
+Склонируем репо из временной директории в основную, отбрасывая вспомогательную часть для svn
+
+cd ..
+git clone dir_git_temp dir_dev
+cd dir_dev
+git remote rm origin
