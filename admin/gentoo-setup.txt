@@ -70,41 +70,6 @@ emerge --deep --update --with-bdeps=y --newuse world
 emerge --depclean
 revdep-rebuild
 
-Настройка печати - для HP LaserJet 1020 - танцы с бубном!
-
-Сначала ставим cups
-emerge cups
-/etc/init.d/cupsd start
-rc-update add cupsd default
-
-Потом танцы с бубном!
-http://www.gentoo-wiki.info/HP_LaserJet_1020
-Во-первых, нужен проприетарный драйвер foo2zjs от HP
-Во-вторых, версия из портежа не работает
-В-третьих, этим принтерам нужно загружать программку к ним в 
-железную память каждый раз, когда их включаешь - для этого используется hotplug
-hotplug конфликтует с udev-ными правилами для принтера! поэтому, чтобы его поставить,
-надо сделать :
-mv /etc/udev/rules.d/70-printers.rules ~/куда-то
-тогда hotplug можно будет ставить! и теперь:
-
-wget -O foo2zjs.tar.gz http://foo2zjs.rkkda.com/foo2zjs.tar.gz
-tar zxf foo2zjs.tar.gz
-cd foo2zjs
-make
-./getweb 1020
-su
-make install
-make install-hotplug
-^^^
-При второй установке этот 70-printers.rules оказался уже тут:
-/lib/udev/rules.d/70-printers.rules
-
-потом перезапустить демона cups
-/etc/init.d/cupsd restart
-
-И после этого всё запечатало
-
 Настройка гадского KDE, чтобы выполнял системные настройки, выключение, втык флешек и тыды
 Сначала собираем с новым флагом policykit - мол обязательный для такого
 Нихрена не помогло - в kde-стаффе такого флага вообще нет
@@ -194,3 +159,488 @@ emerge eix
 
 Во время одного из апдейтов мира делаем
 merge --unmerge sys-apps/module-init-tools
+
+
+#-----------------------------------------
+
+round 3 !!!
+
+Установка Gentoo amd64 на некробук Toshiba Portege Z930
+
+Образ minimal install пишем на флешку
+
+Дальше веселье с wifi-карточкой
+Хочу всё качать через wifi
+Адаптер там - Intel Centrino N2230
+Для него надо доставить firmware
+В моём случае это iwlwifi-2030-ucode-18.168.6.1
+Пишем на вторую флешку, записываем в ФС загрузочной флешки, затем
+
+mv iwlwifi-2030-ucode-18.168.6.1 /lib/firmware
+ln -s iwlwifi-2030-ucode-18.168.6.1/iwlwifi-2030-6.ucode /lib/firmware
+^^^
+нужно, чтобы в директории он видел файл ucode непосредственно
+
+modprode -r iwlwifi
+modprode iwlwifi
+
+wlan0 поднялся
+
+iwlist wlan0 scan >& wifi-nets.txt
+^^^
+определяем доступные wifi-сети
+их имена будут с ключом "ESSID"
+
+дальше нужно настроить доступ к сети с шифрованием WPA2 через wpa_supplicant
+/etc/conf.d/net
+^^^
+общие настройки, пишем туда:
+modules="wpa_supplicant"
+wpa_supplicant_wlan0="-Dwext"
+
+modules="wpa_supplicant"
+^^^
+показываем, что используем wpa_supplicant по умолчанию (супротив дефолтных wireless-tools)
+
+wpa_supplicant_wlan0="-Dwext"
+^^^
+указываем явно драйвер, чтобы не угадывал
+
+/etc/wpa_supplicant/wpa_supplicant.conf
+^^^
+теперь настройки для самого wpa_supplicant
+
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+ap_scan=1
+
+network={
+  ssid="net-name"
+  psk="very secret passphrase"
+  priority=5
+}
+
+wpa_supplicant -c/etc/wpa_supplicant/wpa_supplicant.conf -B -iwlan0
+^^^
+ввод интерфейса в сеть через wpa_supplicant ; -B - бэкграунд
+
+будет также нелишне сделать ifconfig eth0 down, чтобы нерабочий интерфейс не мешался
+ip addr del <ADDR> dev <INTERFACE>
+^^^
+удалить адрес с интерфейса
+тоже может пригодиться
+
+********************
+
+Размечаем диск
+нужно юзать размечалку, которая умеет в gpt
+
+!!! Внимание !!!
+Уродец parted вносит изменения в таблицу разделов сразу, а не набирает транзакцию и коммитит, как fdisk \ gdisk
+И интерфейс у него в худших традициях гнутых
+размечаем gdisk-ом, которого ныне нет в Джентушных доках
+
+Создаём UEFI раздел
+Доки советуют выбирать для него размер, сравнимый с /boot (порядка 500Mb); 
+если юзаем grub, он вполне может быть небольшим (100-200 Mb), но на всякий пожарный следует зарезервировать побольше
+
+создаём разделы:
+512 Mb - Linux Partition - под бут
+512 Mb - EFI System
+12 Gb  - Linux swap - (вдвое больше размера оперативы)
+30 Gb  - Lunux Partition - под /
+08 Gb  - Lunux Partition - под /var
+20 Gb  - Linux Partition - резервный раздел под юзерское осенезависимое пространство (когда внешнего жирного винта нет)
+
+создаём файловые системы:
+
+Для UEFI доки предписывают только FAT32
+Для корня был бы неплох btrfs, но нету mkfs.btrfs в минимальном установочном образе
+Для юзерских данных - jfs как многообещающую
+reiserfs для /var (то есть компиляции всего из портежа) посмотрим, как себя зарекомендует
+
+mkfs.ext4 /dev/sda1
+mkfs.vfat /dev/sda2
+mkswap /dev/sda3
+swapon /dev/sda3
+mkfs.jfs /dev/sda4
+mkreiserfs /dev/sda5
+mkfs.jfs /dev/sda6
+
+mkdir -p /mnt/gentoo/var
+mkdir -p /mnt/gentoo/boot
+
+mount /dev/sda4 /mnt/gentoo
+mount /dev/sda5 /mnt/gentoo/var
+mount /dev/sda1 /mnt/gentoo/boot
+
+********************
+Действия, повторяющие описание из стандартных доков
+
+Обновляем дату
+
+date 031123342013
+^^^
+месяц, день, час, минута, год - формат по умолчанию
+
+Записываем stage3-tarball в /root (скачанный заранее с хостовой машины и на флешке принесённый)
+
+cd /mnt/gentoo
+tar xvjpf /root/stage3-*.tar.bz2
+
+Пишем в etc/portage/make.conf
+
+CFLAGS="-O2 -pipe -fomit-frame-pointer -march=native"
+MAKEOPTS="-j4"
+GENTOO_MIRRORS="http://gentoo.bloodhost.ru/ http://gentoo.localhost.net.ar/ http://ftp.dei.uc.pt/pub/linux/gentoo/ "
+SYNC="rsync://rsync1.ru.gentoo.org/gentoo-portage"
+USE="mmx sse sse2 "
+#USE="mmx sse sse2 bash-completion cdinstall cups djvu ffmpeg foomaticdb gimp gphoto2 handbook libedit mhash mplayer multilib nls python scanner smp source ssl v4l vim-syntax zlib zsh-completion -gnome truetype type1 oss -alsa"
+LINGUAS="en ru"
+
+До того, как мы на постоянной основе забутимся в gentoo с диска, есть смысл оставить минимум USE-флагов
+Во время настройки нам потребуется емёрджить тулзы для ядра, сети, железа
+С флагами, выставленными в максимум, их установка значительно растянется
+После того, как в минимальной конфигурации станет возможно забутиться, уже можно включить полные USE-флаги и сделать emerge --update --newuse --with-bdeps=y --deep world
+
+Сохраняем настройки DNS
+cp -L /etc/resolv.conf /mnt/gentoo/etc/
+^^^
+-L чтобы копировать не ссылку
+
+mount -t proc none /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+^^^
+запиливаем ядерные файловые системы в новое окружение
+rbind - для того, чтобы маунтились все суб-системы внутри директорий
+забавное использование - получается, mount-ом можно сказать, что произвольная директория (не только файл) теперь отражается и в другой директории тоже 
+
+chroot /mnt/gentoo /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+^^^
+чрутимся в систему, развёрнутую из stage3
+
+mkdir /usr/portage
+emerge-webrsync
+emerge --sync
+emerge --oneshot -u portage
+^^^
+получаем последний portage
+
+eselect profile list
+eselect profile set 3
+^^^
+смотрим доступные профили (совокупности USE-флагов) и выбираем default/linux/amd64/13.0/desktop
+
+cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+echo "Europe/Moscow" > /etc/timezone
+^^^
+настраиваем правильную тайм-зону
+
+********************
+
+Собираем ядро - 1
+
+воспользуемся genkernel-ом, чтобы получить заведомо рабочее ядро
+(затем оттюнингованное соберём руками)
+
+emerge gentoo-sources
+^^^
+с подготовленными USE-флагами это зацепит 70 пакетов!
+emerge genkernel
+cd /usr/src/linux
+genkernel --menuconfig all
+^^^
+запуск genkernel, но с предварительными правками конфига по дефолту
+добавляем только поддержку jfs и btrfs в самом ядре вместо модулей
+
+ls /boot/kernel* /boot/initramfs*
+^^^
+записываем названия ядра и initramfs для загрузчика
+kernel-genkernel-x86_64-3.7.10-gentoo
+initramfs-genkernel-x86_64-3.7.10-gentoo
+
+********************
+
+Системная конфигурация
+
+пишем /etc/fstab
+
+/etc/conf.d/hostname
+^^^
+выставляем имя хоста
+
+копируем etc/conf.d/net из окружения флешки в чрут
+дописываем туда:
+#config_eth0="dhcp"
+^^^
+чтобы eth0 был наготове, когда понадобится воткнуть провод
+
+cd /etc/init.d
+ln -s net.lo net.eth0
+ln -s net.lo net.wlan0
+rc-update add net.eth0 default
+rc-update add net.wlan0 default
+^^^
+добавляем автозагрузку сетевых интерфейсов
+
+кладём из окружения флешки /lib/firmware/iwl* в /mnt/gentoo/lib/firmware
+emerge wpa_supplicant
+^^^
+ставим wpa_supplicant внутрь /mnt/gentoo
+копируем конфиг для него etc/wpa_supplicant/wpa_supplicant.conf
+
+ставим рутовый пароль
+
+/etc/conf.d/keymaps
+^^^
+ставим переключение раскладки, пишем туда
+keymap="ruwin_cplk-UTF-8"
+
+/etc/conf.d/hwclock
+^^^
+ставим значение 
+clock="local"
+
+/etc/locale.gen
+^^^
+пишем системную локаль
+ru_RU.UTF-8 UTF-8
+
+locale-gen
+^^^
+генерируем файлы локали
+
+/etc/env.d/02locale
+^^^
+пишем значение
+LANG="ru_RU.UTF-8"
+LC_MESSAGES="C"
+LC_COLLATE="C"
+это выставит системную локаль по умолчанию при загрузке
+
+emerge syslog-ng
+emerge logrotate
+rc-update add syslog-ng default
+^^^
+устанавливаем системный логгер
+
+emerge vixie-cron
+rc-update add vixie-cron default
+^^^
+устанавливаем демон крона
+
+emerge mlocate
+^^^
+устанавливаем базу данных с индексами файлов
+
+emerge reiserfsprogs
+emerge jfsutils
+emerge dhcpcd
+^^^
+устанавливаем нужный стафф
+
+********************
+
+Устанавливаем загрузчик
+
+Ставим grub2 с загрузкой через UEFI
+
+/etc/portage/make.conf
+GRUB_PLATFORMS="efi-64"
+^^^
+описываем режим efi, который поддерживает grub
+
+/etc/portage/package.use
+^^^
+добавляем поддержку zfs:
+sys-boot/grub libzfs
+
+/etc/portage/package.accept_keywords
+^^^
+размаскировываем:
+sys-boot/efibootmgr
+sys-boot/grub
+sys-fs/zfs
+sys-fs/zfs-kmod
+sys-kernel/spl
+
+emerge grub:2
+^^^
+собираем grub2 во втором слоте с поддержкой UEFI
+(grub в слоте по умолчанию - grub legacy, не умеющий в это)
+
+emerge os-prober
+^^^
+ставим автоопределятель операционок
+
+настраиваем grub2 по доке
+http://wiki.gentoo.org/wiki/GRUB2_Quick_Start
++ хендбук
+
+grep -v rootfs /proc/mounts > /etc/mtab
+^^^
+дока пишет, что grub-install не будет работать из коробки из-за того, что мы в чруте
+нужно сообщить о всех примонтированных разделах
+
+mkdir -p /boot/efi
+mount /dev/sda2 /boot/efi
+
+grub2-install --target=x86_64-efi
+^^^
+устанавливаем файлы grub2 в /boot/grub2 и /boot/efi
+
+Получаем эпик фейл:
+Fatal: Couldn't open either sysfs or procfs directories for accessing EFI variables.
+Try modprobe efivars as root.
+
+Проблема оказалась в том, что установку файлов для EFI можно провести, только если мы
+загружены в EFI, в противном случае в ведре не будет каких-то волшебных переменных
+Ха-ха
+Теперь надо искать, как загрузиться в EFI с флешки
+
+FIXME:
+При установке получаем жалобы на zfs:
+
+Failed to load ZFS module stack.
+Load the module manually by running 'insmod <location>/zfs.ko'
+
+insmod /lib/modules/.../zfs.ko говорит:
+could not insert module zfs.ko invalid module format
+
+Настройка конфига:
+По идее, grub2 сам сканит директории, определяет ядра \ initramfs и генерит конфиг
+grub2-mkconfig -o /boot/grub2/grub.cfg
+^^^
+сканирование и автоматическое создание конфига
+заработало, конфиг сгенерил 
+
+kernel-version*
+initramfs-version*
+^^^
+такой шаблон должен быть у ядер\initrd, чтобы grub2 их нашёл
+
+На всякий случай, описывается создание grub.conf руками (старый формат grub-legacy)
+
+/boot/grub2/grub.legacy.conf
+^^^
+default 0
+timeout 10
+
+title Gentoo Linux 3.7.10 Genkernel
+root (hd0,0)
+kernel /boot/kernel-genkernel-x86_64-3.7.10-gentoo
+initrd /boot/initramfs-genkernel-x86_64-3.7.10-gentoo
+
+
+#-----------------------------------------
+
+# round all
+
+********************
+
+Сбор кошерного мира
+
+emerge pmount
+emerge sudo
+emerge layman
+^^^
+ставим нужные полезности
+
+После обновления udev до udev-200 сносим его нафиг и заменяем на eudev:
+echo "=sys-fs/eudev-1_beta4-r1" >> /etc/portage/package.accept_keywords
+emerge --unmerge udev
+emerge eudev
+revdep-rebuild
+
+********************
+
+Настраиваем оверлей
+
+source /var/lib/layman/make.conf
+^^^
+пишем в /etc/portage/make.conf, чтобы portage подхватывал установленные оверлеи
+
+eix-remote update
+^^^
+загружаем базу оверлеев
+
+layman -L
+^^^
+посмотреть базу известных оверлеев
+
+layman -a <NAME>
+^^^
+добавить оверлей
+
+layman -l
+^^^
+посмотреть локально установленные оверлеи
+
+layman -S
+^^^
+обновить оверлеи наподобие --sync
+
+********************
+
+Оборудование
+
+Настройка печати - для HP LaserJet 1020 - танцы с бубном!
+
+Сначала ставим cups
+emerge cups
+/etc/init.d/cupsd start
+rc-update add cupsd default
+
+Потом танцы с бубном!
+http://www.gentoo-wiki.info/HP_LaserJet_1020
+Во-первых, нужен проприетарный драйвер foo2zjs от HP
+Во-вторых, версия из портежа не работает
+В-третьих, этим принтерам нужно загружать программку к ним в 
+железную память каждый раз, когда их включаешь - для этого используется hotplug
+hotplug конфликтует с udev-ными правилами для принтера! поэтому, чтобы его поставить,
+надо сделать :
+mv /etc/udev/rules.d/70-printers.rules ~/куда-то
+тогда hotplug можно будет ставить! и теперь:
+
+wget -O foo2zjs.tar.gz http://foo2zjs.rkkda.com/foo2zjs.tar.gz
+tar zxf foo2zjs.tar.gz
+cd foo2zjs
+make
+./getweb 1020
+su
+make install
+make install-hotplug
+^^^
+При второй установке этот 70-printers.rules оказался уже тут:
+/lib/udev/rules.d/70-printers.rules
+
+потом перезапустить демона cups
+/etc/init.d/cupsd restart
+
+И после этого всё запечатало
+
+********************
+
+Настройка печати для Canon Pixma iP7240
+
+Дрова называются net-print/cnijfilter-drivers, и в основном портеже их нет
+Подключаем оверлей sabayon
+
+net-print/cnijfilter-drivers ip7200
+^^^
+в /etc/portage/package.use пишем, какие конкретно дрова
+
+net-print/cnijfilter-drivers
+net-print/cnijfilter
+^^^
+в /etc/portage/package.accept_keywords, размаскировываем для amd64
+
+emerge net-print/cnijfilter-drivers
+^^^
+собсно ставим
+
+Для дров происходит вот это:
+http://bugs.sabayon.org/show_bug.cgi?id=4348
