@@ -41,6 +41,7 @@ EMERGE_DEFAULT_OPTS = --with-bdeps=y
 emerge --update --deep --newuse --with-bdeps=y world
 emerge -uDN world
 # (после настроек с EMERGE_DEFAULT_OPTS)
+emerge @preserved-rebuild
 emerge --depclean
 revdep-rebuild
 etc-update
