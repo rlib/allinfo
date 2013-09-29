@@ -32,8 +32,15 @@ etc-update
 ^^^
 хрень для обновления каталогов, защищенных от авто-обновления при emerge
 
+EMERGE_DEFAULT_OPTS = --with-bdeps=y
+^^^
+# выставить опции в etc/make.conf, которые будут автоматически добавляться к 
+# вызову emerge, чтобы в строчке не набирать
+
 # правильное полное обновление мира:
 emerge --update --deep --newuse --with-bdeps=y world
+emerge -uDN world
+# (после настроек с EMERGE_DEFAULT_OPTS)
 emerge --depclean
 revdep-rebuild
 etc-update
