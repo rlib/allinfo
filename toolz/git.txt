@@ -553,6 +553,11 @@ mv hooks/post-update.sample hooks/post-update
 ^^^
 процедура, указанная для поднятия гита через http
 
+git daemon --reuseaddr --base-path=/hidden/root --export-all --verbose --enable=receive-pack
+^^^
+Полный запуск демона с разрешением на push
+Репо, лежащий на server по пути /hidden/root/repo.git, будет доступен по адресу git://server/repo.git
+
 ********
 связь удалённых и локальных ветвей
 
