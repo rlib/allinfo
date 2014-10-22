@@ -32,8 +32,16 @@ etc-update
 ^^^
 хрень для обновления каталогов, защищенных от авто-обновления при emerge
 
+EMERGE_DEFAULT_OPTS = --with-bdeps=y
+^^^
+# выставить опции в etc/make.conf, которые будут автоматически добавляться к 
+# вызову emerge, чтобы в строчке не набирать
+
 # правильное полное обновление мира:
 emerge --update --deep --newuse --with-bdeps=y world
+emerge -uDN world
+# (после настроек с EMERGE_DEFAULT_OPTS)
+emerge @preserved-rebuild
 emerge --depclean
 revdep-rebuild
 etc-update
@@ -73,3 +81,32 @@ equery list -p -o WORD
 equery depends WORD
 ^^^
 посмотреть все пакеты, зависящие от WORD
+
+********************
+
+Настраиваем оверлей
+
+source /var/lib/layman/make.conf
+^^^
+пишем в /etc/portage/make.conf, чтобы portage подхватывал установленные оверлеи
+
+eix-remote update
+^^^
+загружаем базу оверлеев
+
+layman -L
+^^^
+посмотреть базу известных оверлеев
+
+layman -a <NAME>
+^^^
+добавить оверлей
+
+layman -l
+^^^
+посмотреть локально установленные оверлеи
+
+layman -S
+^^^
+обновить оверлеи наподобие --sync
+
