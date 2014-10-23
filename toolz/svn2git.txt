@@ -1,0 +1,118 @@
+Хроника перевода svn на git на системе без рутовых прав
+
+*)
+
+Сбор email-ов :
+cd svn-work-copy
+
+#!/usr/bin/env bash
+authors=$(svn log -q | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
+for author in ${authors}; do
+  echo "${author} = <NAME> ${author}";
+done
+
+Нужно задать карту имён: логины svn = реальные мыла
+В нашем случае логины svn тоже реальные мыла
+
+anikin_a@mcst.ru = anikin_a <anikin_a@mcst.ru>
+
+*)
+
+Собираем git с поддержкой svn
+
+cd git-master
+make
+make install
+^^^
+Установит в домашнюю директорию, и норм
+Если что, добавить ~/bin в PATH
+
+*)
+
+Создаём временный git-репо для переноса
+
+mkdir -p /dir/tmp
+cd /dir/tmp
+git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
+
+Напарываемся на:
+
+Can't locate SVN/Core.pm in @INC (@INC contains: <...> .) at <git-pref>/lib/perl5/site_perl/5.8.8/Git/SVN/Utils.pm line 6.
+
+strace -f -o try-to-open.log git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
+Пытается открыть перловые модули SVN-а, которых в системе нет
+
+*) Начинаем геморрой установки всего, что не хватает для этих модулей
+
+Сами модули - SVN::Core, "perl bindings for subversion"
+
+Для их установки используем Alien-SVN-v1.7.3.1 - специальный wrapper для этого
+
+mkdir -p SVN
+SVNROOT=`pwd`/SVN
+cd Alien-SVN-v1.7.3.1
+perl Build.PL
+
+Нужен > sqlite-3.7.6.3
+Качаем sqlite-amalgamation-3080002
+
+mkdir -p src/subversion/sqlite-amalgamation
+cp ../sqlite-amalgamation-3080002/sqlite3.c src/subversion/sqlite-amalgamation/sqlite3.c
+
+Запускаем опять 
+perl Build.PL
+
+В опции подаём 
+
+--libdir=${SVNROOT} --prefix=<default> --perl=<default> CFLAGS="-I${SVNROOT}/usr/include" LDFLAGS="-L${SVNROOT}/usr/lib"
+Запускаем на компиляцию
+./Build
+
+Мануал
+Alien-SVN-v1.7.3.1/src/subversion/subversion/bindings/swig/INSTALL
+
+cd src/subversion
+make swig-pl
+cd subversion/bindings/swig/perl/native
+perl Makefile.PL PREFIX=${SVNROOT}
+make install
+
+*)
+
+Устанавливаем, где искать SVN-модули
+
+export PERL5LIB=$SVNROOT/lib/perl5/site_perl/5.8.8/i686-linux
+export LD_LIBRARY_PATH=$SVNROOT
+
+*) 
+
+Таки создаём временный git-репо для переноса
+
+git svn init http://code.yoursite.net/svn/trunk/ --no-metadata
+
+Указываем карту авторов коммитов
+git config svn.authorsfile /path/to/authors.txt
+
+*) 
+
+Кодировка
+Если в ~/.gitconfig указаны поля commitEncoding \ logOutputEncoding, то их надо указывать как
+utf8
+а не 
+ru_RU.utf8
+Вторая запись не работает
+
+*)
+
+Переносим данные
+
+git svn fetch
+
+*)
+
+Склонируем репо из временной директории в основную, отбрасывая вспомогательную часть для svn
+
+cd ..
+git clone dir_git_temp dir_dev
+cd dir_dev
+git remote rm origin

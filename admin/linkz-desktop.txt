@@ -41,3 +41,5 @@ http://www.ljpoisk.ru/archive/860016.html
 Ещё пример работы с fontconfig
 http://useunix.ru/nastraivaem-shrifty-v-xorg-freebsd-i-linux
 
+О шрифтах через infinity
+http://lushpai.org/infinality-slackware-14/

@@ -109,3 +109,12 @@ http://www.sics.se/~psm/sparcstack.html
 Соглашения о вызове функций в SPARC
 http://en.wikipedia.org/wiki/Calling_convention#SPARC
 
+Про visibility в ELF
+http://gcc.gnu.org/wiki/Visibility
+
+Почему LD_LIBRARY_PATH не очень
+http://xahlee.info/UnixResource_dir/_/ldpath.html
+
+Солярщики ругают LD_LIBRARY_PATH
+http://linuxmafia.com/faq/Admin/ld-lib-path.html
+https://blogs.oracle.com/ali/entry/avoiding_ld_library_path_the
